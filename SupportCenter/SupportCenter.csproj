@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="clsClient.cs" />
+    <Compile Include="clsClientList.cs" />
     <Compile Include="clsConnection.cs" />
     <Compile Include="ctlConnectionInfo.cs">
       <SubType>UserControl</SubType>

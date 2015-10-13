@@ -56,6 +56,7 @@ namespace SupportCenter
         //}
 
         // Module variables
+
         private string mstrApplicationName;
         private string mstrWorkstationID;
         private string mstrDBMS;

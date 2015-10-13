@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +20,7 @@ namespace SupportCenter
         private string mstrTerminalServerName;     
         private string mstrTerminalServerAddress;  
         private string mstrNotes;                  
-        //private mrstClient                 As ADODB.Recordset;
-        //private mrstUserList               As ADODB.Recordset;
-        //private mrstIssues                  As ADODB.Recordset;
+
         private string mstrVersion; 
         private string mstrfkPrimaryContactDeveloper;
         private string mstrfkTechnicalContact; 
@@ -37,6 +36,10 @@ namespace SupportCenter
         private string mstrWebConnectionPassword; 
         private string mstrSQLServerLogin;
         private string mstrSQLServerPassword;
+
+        private DataTable mdtClient;
+        private DataTable mdtUserList;
+        private DataTable mdtIssues;
 
         // Properties
 
@@ -279,8 +282,8 @@ namespace SupportCenter
 //----------------------*
 // READ-ONLY PROPERTIES *
 //----------------------*
-//public string UserList() As ADODB.Recordset
-//    Set UserList = mrstUserList
+        //public string UserList() As ADODB.Recordset
+        //Set UserList = mdtUserList
 
 
 //public string Issues() As ADODB.Recordset
@@ -293,8 +296,8 @@ namespace SupportCenter
 
 //private voidClass_Initialize()
     
-//    Set mrstClient = New ADODB.Recordset
-//    Set mrstUserList = New ADODB.Recordset
+//    Set mdtClient = New ADODB.Recordset
+//    Set mdtUserList = New ADODB.Recordset
 //    Set mrstIssues = New ADODB.Recordset
 
 //End Sub
@@ -303,8 +306,8 @@ namespace SupportCenter
 
 //    On Error Resume Next
 
-//    Set mrstClient = Nothing
-//    Set mrstUserList = Nothing
+//    Set mdtClient = Nothing
+//    Set mdtUserList = Nothing
 
 //End Sub
 
@@ -315,33 +318,31 @@ namespace SupportCenter
 
         public void NewClient(){
     
-            //string strSQL; 
+            string strSQL; 
     
-            //If mrstClient.State = adStateOpen Then mrstClient.Close
-            //mrstClient.CursorLocation = adUseClient
+            if (mdtClient == null){
+                mdtClient = new DataTable();
+            }
+            
+            //open db connection
+            //mdtClient.Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockBatchOptimistic;
+
+            mstrClientCode = null;
+            mstrClientName = null;
+            mstrPrimaryClaimsUserCode = null;
+            mstrIntefaceClaimsUserCode = null;
+            mstrRemoteAccessType = null;
+            mstrRemoteAccessAddress = null;
+            mstrSQLServerName = null;
+            mstrSQLServerAddress = null;
+            mstrTerminalServerName = null;
+            mstrTerminalServerAddress = null;
+            mstrNotes = null;
+            mstrfkPrimaryContactDeveloper = null;
+            mstrfkTechnicalContact = null;
     
-            //strSQL = _
-            //    "SELECT * " & _
-            //    "  FROM Client " & _
-            //    " WHERE 1=2"
-    
-            //mrstClient.Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockBatchOptimistic
-            //mstrClientCode = vbNullString
-            //mstrClientName = vbNullString
-            //mstrPrimaryClaimsUserCode = vbNullString
-            //mstrIntefaceClaimsUserCode = vbNullString
-            //mstrRemoteAccessType = vbNullString
-            //mstrRemoteAccessAddress = vbNullString
-            //mstrSQLServerName = vbNullString
-            //mstrSQLServerAddress = vbNullString
-            //mstrTerminalServerName = vbNullString
-            //mstrTerminalServerAddress = vbNullString
-            //mstrNotes = vbNullString
-            //mstrfkPrimaryContactDeveloper = vbNullString
-            //mstrfkTechnicalContact = vbNullString
-    
-            //GetClientUsers vbNullString
-            //GetClientIssues vbNullString
+            GetClientUsers(null);
+            GetClientIssues(null);
             
         }
 
@@ -349,74 +350,74 @@ namespace SupportCenter
     
             //Dim strSQL 
     
-            //If mrstClient.State = adStateOpen Then mrstClient.Close
-            //mrstClient.CursorLocation = adUseClient
+            //If mdtClient.State = adStateOpen Then mdtClient.Close
+            //mdtClient.CursorLocation = adUseClient
     
             //strSQL = _
-            //    "SELECT * " & _
-            //    "  FROM Client " & _
+            //    "SELECT * " +
+            //    "  FROM Client " +
             //    " WHERE ClientCode = '" & pstrClientCode & "'"
     
-            //With mrstClient
+            //With mdtClient
             //    .Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockBatchOptimistic, adCmdText
         
             //    If .EOF Then
-            //        mstrClientCode = vbNullString
-            //        mstrClientName = vbNullString
-            //        mstrPrimaryClaimsUserCode = vbNullString
-            //        mstrIntefaceClaimsUserCode = vbNullString
-            //        mstrRemoteAccessType = vbNullString
-            //        mstrRemoteAccessAddress = vbNullString
-            //        mstrSQLServerName = vbNullString
-            //        mstrSQLServerAddress = vbNullString
-            //        mstrTerminalServerName = vbNullString
-            //        mstrTerminalServerAddress = vbNullString
-            //        mstrNotes = vbNullString
-            //        mstrVersion = vbNullString
-            //        mstrfkPrimaryContactDeveloper = vbNullString
-            //        mstrfkTechnicalContact = vbNullString
-            //        mstrDomainLogin = vbNullString
-            //        mstrDomainPassword = vbNullString
-            //        mstrVPNAddress = vbNullString
-            //        mstrVPNLogin = vbNullString
-            //        mstrVPNPassword = vbNullString
-            //        mstrTerminalServerLogin = vbNullString
-            //        mstrTerminalServerPassword = vbNullString
-            //        mstrWebConnectionAddress = vbNullString
-            //        mstrWebConnectionLogin = vbNullString
-            //        mstrWebConnectionPassword = vbNullString
-            //        mstrSQLServerLogin = vbNullString
-            //        mstrSQLServerPassword = vbNullString
+            //        mstrClientCode = null
+            //        mstrClientName = null
+            //        mstrPrimaryClaimsUserCode = null
+            //        mstrIntefaceClaimsUserCode = null
+            //        mstrRemoteAccessType = null
+            //        mstrRemoteAccessAddress = null
+            //        mstrSQLServerName = null
+            //        mstrSQLServerAddress = null
+            //        mstrTerminalServerName = null
+            //        mstrTerminalServerAddress = null
+            //        mstrNotes = null
+            //        mstrVersion = null
+            //        mstrfkPrimaryContactDeveloper = null
+            //        mstrfkTechnicalContact = null
+            //        mstrDomainLogin = null
+            //        mstrDomainPassword = null
+            //        mstrVPNAddress = null
+            //        mstrVPNLogin = null
+            //        mstrVPNPassword = null
+            //        mstrTerminalServerLogin = null
+            //        mstrTerminalServerPassword = null
+            //        mstrWebConnectionAddress = null
+            //        mstrWebConnectionLogin = null
+            //        mstrWebConnectionPassword = null
+            //        mstrSQLServerLogin = null
+            //        mstrSQLServerPassword = null
             //    Else
             //        mstrClientCode = .Fields("ClientCode").value
             //        mstrClientName = .Fields("ClientName").value
             //        mstrPrimaryClaimsUserCode = _
-            //            IfNull(.Fields("PrimaryClaimsUserCode").value, vbNullString)
+            //            IfNull(.Fields("PrimaryClaimsUserCode").value, null)
             //        mstrIntefaceClaimsUserCode = _
-            //            IfNull(.Fields("InterfaceClaimsUserCode").value, vbNullString)
-            //        mstrRemoteAccessType = IfNull(.Fields("RemoteAccessType").value, vbNullString)
-            //        mstrRemoteAccessAddress = IfNull(.Fields("RemoteAccessAddress").value, vbNullString)
-            //        mstrSQLServerName = IfNull(.Fields("SQLServerName").value, vbNullString)
-            //        mstrSQLServerAddress = IfNull(.Fields("SQLServerIPAddress").value, vbNullString)
-            //        mstrTerminalServerName = IfNull(.Fields("TerminalServerName").value, vbNullString)
+            //            IfNull(.Fields("InterfaceClaimsUserCode").value, null)
+            //        mstrRemoteAccessType = IfNull(.Fields("RemoteAccessType").value, null)
+            //        mstrRemoteAccessAddress = IfNull(.Fields("RemoteAccessAddress").value, null)
+            //        mstrSQLServerName = IfNull(.Fields("SQLServerName").value, null)
+            //        mstrSQLServerAddress = IfNull(.Fields("SQLServerIPAddress").value, null)
+            //        mstrTerminalServerName = IfNull(.Fields("TerminalServerName").value, null)
             //        mstrTerminalServerAddress = _
-            //            IfNull(.Fields("TerminalServerIPAddress").value, vbNullString)
-            //        mstrNotes = IfNull(.Fields("Notes").value, vbNullString)
-            //        mstrVersion = IfNull(.Fields("Version").value, vbNullString)
-            //        mstrfkPrimaryContactDeveloper = IfNull(.Fields("fkPrimaryContactDeveloper").value, vbNullString)
-            //        mstrfkTechnicalContact = IfNull(.Fields("fkTechnicalContact").value, vbNullString)
-            //        mstrDomainLogin = IfNull(.Fields("DomainLogin").value, vbNullString)
-            //        mstrDomainPassword = IfNull(.Fields("DomainPassword").value, vbNullString)
-            //        mstrVPNAddress = IfNull(.Fields("VPNAddress").value, vbNullString)
-            //        mstrVPNLogin = IfNull(.Fields("VPNLogin").value, vbNullString)
-            //        mstrVPNPassword = IfNull(.Fields("VPNPassword").value, vbNullString)
-            //        mstrTerminalServerLogin = IfNull(.Fields("TerminalServerLogin").value, vbNullString)
-            //        mstrTerminalServerPassword = IfNull(.Fields("TerminalServerPassword").value, vbNullString)
-            //        mstrWebConnectionAddress = IfNull(.Fields("WebConnectionAddress").value, vbNullString)
-            //        mstrWebConnectionLogin = IfNull(.Fields("WebConnectionLogin").value, vbNullString)
-            //        mstrWebConnectionPassword = IfNull(.Fields("WebConnectionPassword").value, vbNullString)
-            //        mstrSQLServerLogin = IfNull(.Fields("SQLServerLogin").value, vbNullString)
-            //        mstrSQLServerPassword = IfNull(.Fields("SQLServerPassword").value, vbNullString)
+            //            IfNull(.Fields("TerminalServerIPAddress").value, null)
+            //        mstrNotes = IfNull(.Fields("Notes").value, null)
+            //        mstrVersion = IfNull(.Fields("Version").value, null)
+            //        mstrfkPrimaryContactDeveloper = IfNull(.Fields("fkPrimaryContactDeveloper").value, null)
+            //        mstrfkTechnicalContact = IfNull(.Fields("fkTechnicalContact").value, null)
+            //        mstrDomainLogin = IfNull(.Fields("DomainLogin").value, null)
+            //        mstrDomainPassword = IfNull(.Fields("DomainPassword").value, null)
+            //        mstrVPNAddress = IfNull(.Fields("VPNAddress").value, null)
+            //        mstrVPNLogin = IfNull(.Fields("VPNLogin").value, null)
+            //        mstrVPNPassword = IfNull(.Fields("VPNPassword").value, null)
+            //        mstrTerminalServerLogin = IfNull(.Fields("TerminalServerLogin").value, null)
+            //        mstrTerminalServerPassword = IfNull(.Fields("TerminalServerPassword").value, null)
+            //        mstrWebConnectionAddress = IfNull(.Fields("WebConnectionAddress").value, null)
+            //        mstrWebConnectionLogin = IfNull(.Fields("WebConnectionLogin").value, null)
+            //        mstrWebConnectionPassword = IfNull(.Fields("WebConnectionPassword").value, null)
+            //        mstrSQLServerLogin = IfNull(.Fields("SQLServerLogin").value, null)
+            //        mstrSQLServerPassword = IfNull(.Fields("SQLServerPassword").value, null)
             //    End If
             //End With
     
@@ -427,19 +428,22 @@ namespace SupportCenter
 
         public void GetClientUsers(string pstrClientCode){
     
-            //Dim strSQL 
+            string strSQL; 
     
-            //strSQL = _
-            //    "SELECT ClaimsUserCode, ClaimsUser, fkClientCode, PhoneNumber, FaxNumber, " & _
-            //    "       EMailAddress, CreatedDateTime, CreatedUser, ModifiedDateTime, ModifiedUser " & _
-            //    "  FROM ClaimsUser " & _
-            //    " WHERE fkClientCode = '" & pstrClientCode & "'"
+            strSQL = "SELECT ClaimsUserCode, ClaimsUser, fkClientCode, PhoneNumber, FaxNumber, " + 
+                "       EMailAddress, CreatedDateTime, CreatedUser, ModifiedDateTime, ModifiedUser " +
+                "  FROM ClaimsUser " + 
+                " WHERE fkClientCode = '" + pstrClientCode + "'";
             
-            //If mrstUserList.State = adStateOpen Then mrstUserList.Close
-            //mrstUserList.CursorLocation = adUseClient
+            if (mdtUserList.State == adStateOpen) {
+                mdtUserList.Close;
+            } else {
+                mdtUserList.CursorLocation = adUseClient;
+            }
+            
     
-            //mrstUserList.Open strSQL, gobjConnection.Connection, _
-            //    adOpenKeyset, adLockBatchOptimistic, adCmdText
+            mdtUserList.Open strSQL, gobjConnection.Connection, _
+                adOpenKeyset, adLockBatchOptimistic, adCmdText
 
         }
 
@@ -447,18 +451,18 @@ namespace SupportCenter
             //Dim strSQL 
     
             //strSQL = _
-            //    "SELECT IssueID, " & _
-            //            "fkClientCode, " & _
-            //            "IssuePriority , " & _
-            //            "IssueSubject, " & _
-            //            "IssueDescription, " & _
-            //            "ProgressNotes, " & _
-            //            "fkAssignedToDeveloper, " & _
-            //            "IssueOpenDate, " & _
-            //            "TargetCompletionDate, " & _
-            //            "CompletedDate, " & _
-            //            "fkAddedByDeveloper " & _
-            //    "FROM ClientIssue " & _
+            //    "SELECT IssueID, " +
+            //            "fkClientCode, " +
+            //            "IssuePriority , " +
+            //            "IssueSubject, " +
+            //            "IssueDescription, " +
+            //            "ProgressNotes, " +
+            //            "fkAssignedToDeveloper, " +
+            //            "IssueOpenDate, " +
+            //            "TargetCompletionDate, " +
+            //            "CompletedDate, " +
+            //            "fkAddedByDeveloper " +
+            //    "FROM ClientIssue " +
             //    "WHERE fkClientCode = '" & pstrClientCode & "' "
 
     
@@ -482,7 +486,7 @@ namespace SupportCenter
         //    Const c_strSource  = "SupportCenter.clsClient.Save"
 
         //    Save = False
-        //    With mrstClient
+        //    With mdtClient
         
         //        If .EOF Then
         //            .AddNew
@@ -493,9 +497,9 @@ namespace SupportCenter
         //        .Fields("ClientCode").value = mstrClientCode
         //        .Fields("ClientName").value = mstrClientName
         //        .Fields("PrimaryClaimsUserCode").value = _
-        //            IIf(mstrPrimaryClaimsUserCode = vbNullString, Null, mstrPrimaryClaimsUserCode)
+        //            IIf(mstrPrimaryClaimsUserCode = null, Null, mstrPrimaryClaimsUserCode)
         //        .Fields("InterfaceClaimsUserCode").value = _
-        //            IIf(mstrIntefaceClaimsUserCode = vbNullString, Null, mstrIntefaceClaimsUserCode)
+        //            IIf(mstrIntefaceClaimsUserCode = null, Null, mstrIntefaceClaimsUserCode)
         //        .Fields("RemoteAccessType").value = mstrRemoteAccessType
         //        .Fields("RemoteAccessAddress").value = mstrRemoteAccessAddress
         //        .Fields("SQLServerName").value = mstrSQLServerName
@@ -525,7 +529,7 @@ namespace SupportCenter
         
         //    End With
     
-        //    With mrstUserList
+        //    With mdtUserList
         //        If .RecordCount > 0 Then
         //            .MoveFirst
         //            Do Until .EOF
@@ -572,22 +576,21 @@ namespace SupportCenter
         //     Project:    SupportCenter
         //   Procedure:    NewClientUser
         // Description:    Add a new user to the specified client.
-        //  Created By:    Richard M. Conlan - 5/10/2004
+        //  Created By:    Evan Swedick - 10/13/2015
         //
         //  Parameters:    pstrUserName (String)
         //                 pstrClientCode (String)
         //----------------------------------------------------------------------------------------------
         public void NewClientUser(string pstrUserCode, string pstrUserName){
 
-            //Dim strSQL 
+            string strSQL;
     
-            //strSQL = _
-            //    "INSERT INTO ClaimsUser( ClaimsUserCode, ClaimsUser, fkClientCode, " & _
-            //    "                        CreatedDateTime, CreatedUser, ModifiedDateTime, " & _
-            //    "                        ModifiedUser ) " & _
-            //    "  valueS( '" & pstrUserCode & "', '" & pstrUserName & "', " & _
-            //    "          '" & mstrClientCode & "', '" & Now & "', '" & gstrDeveloperCode & "', " & _
-            //    "          '" & Now & "', '" & gstrDeveloperCode & "' ) "
+            strSQL = "INSERT INTO ClaimsUser( ClaimsUserCode, ClaimsUser, fkClientCode, " +
+                "                        CreatedDateTime, CreatedUser, ModifiedDateTime, " +
+                "                        ModifiedUser ) " +
+                "  valueS( '" + pstrUserCode + "', '" + pstrUserName + "', " +
+                "          '" + mstrClientCode + "', '" + DateTime.Now + "', '" + gstrDeveloperCode + "', " +
+                "          '" + DateTime.Now + "', '" + gstrDeveloperCode + "' ) ";
         
             //gobjConnection.Connection.Execute strSQL
 
@@ -641,23 +644,19 @@ namespace SupportCenter
         }
 
         public string GetLastCommunication(string pstrClientCode){ 
-        //    '<EhHeader>
-        //    On Error GoTo PROC_ERROR
-        //    Const c_strSource  = "SupportCenter.clsClient.GetLastCommunication"
-        //    '</EhHeader>
     
         //    Dim strSQL 
         //    Dim rstLastCommunication As ADODB.Recordset
         //    Set rstLastCommunication = New ADODB.Recordset
     
-        //    strSQL = "SELECT TOP 1 CAST(DATEPART(yyyy, EndDateTime) as varchar(4)) + '-' " & _
-        //                    "+ RIGHT('0' + CAST(DATEPART(mm, EndDateTime) as varchar(2)), 2) + '-' " & _
-        //                    "+ RIGHT('0' + CAST(DATEPART(dd, EndDateTime) as varchar(2)), 2) + ' (' " & _
-        //                    "+ fkDeveloperCode + ')' AS LastCommunication " & _
-        //                "FROM ActivityLog " & _
-        //                "WHERE fkClientCode = '" & pstrClientCode & "' " & _
-        //                "ORDER BY CAST(DATEPART(yyyy, EndDateTime) as varchar(4)) + '-' " & _
-        //                    "+ RIGHT('0' + CAST(DATEPART(mm, EndDateTime) as varchar(2)), 2)  + '-' " & _
+        //    strSQL = "SELECT TOP 1 CAST(DATEPART(yyyy, EndDateTime) as varchar(4)) + '-' " +
+        //                    "+ RIGHT('0' + CAST(DATEPART(mm, EndDateTime) as varchar(2)), 2) + '-' " +
+        //                    "+ RIGHT('0' + CAST(DATEPART(dd, EndDateTime) as varchar(2)), 2) + ' (' " +
+        //                    "+ fkDeveloperCode + ')' AS LastCommunication " +
+        //                "FROM ActivityLog " +
+        //                "WHERE fkClientCode = '" & pstrClientCode & "' " +
+        //                "ORDER BY CAST(DATEPART(yyyy, EndDateTime) as varchar(4)) + '-' " +
+        //                    "+ RIGHT('0' + CAST(DATEPART(mm, EndDateTime) as varchar(2)), 2)  + '-' " +
         //                    "+ RIGHT('0' + CAST(DATEPART(dd, EndDateTime) as varchar(2)), 2) DESC"
                     
         //    Call rstLastCommunication.Open(strSQL, gobjConnection.Connection)
@@ -665,26 +664,26 @@ namespace SupportCenter
         //    If Not (rstLastCommunication.EOF And rstLastCommunication.BOF) Then
         //        GetLastCommunication = rstLastCommunication!LastCommunication
         //    Else
-        //        GetLastCommunication = vbNullString
+        //        GetLastCommunication = null
         //    End If
 
-        //'<EhFooter>
+        //
         //PROC_EXIT:
         //    Set rstLastCommunication = Nothing
         //    Exit Function
         //PROC_ERROR:
         //    Call ErrorHandler(c_strSource)
         //    GoTo PROC_EXIT
-        //'</EhFooter>
+        //
             return "";
         }
 
         public string GetNumberOfOpenIssues(string pstrClientCode){
             //Dim strSQL 
     
-            //strSQL = "SELECT COUNT(*) AS NumberOfOpenIssues " & _
-            //        "FROM ClientIssue " & _
-            //        "WHERE fkClientCode = '" & pstrClientCode & "' " & _
+            //strSQL = "SELECT COUNT(*) AS NumberOfOpenIssues " +
+            //        "FROM ClientIssue " +
+            //        "WHERE fkClientCode = '" & pstrClientCode & "' " +
             //            "AND CompletedDate IS NULL"
                 
             //GetNumberOfOpenIssues = gobjConnection.Connection.Execute(strSQL)!NumberOfOpenIssues
