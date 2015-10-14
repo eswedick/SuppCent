@@ -435,57 +435,47 @@ namespace SupportCenter
                 "  FROM ClaimsUser " + 
                 " WHERE fkClientCode = '" + pstrClientCode + "'";
             
-            if (mdtUserList.State == adStateOpen) {
-                mdtUserList.Close;
-            } else {
-                mdtUserList.CursorLocation = adUseClient;
+            if (mdtUserList != null) {
+                mdtUserList = null;
             }
             
-    
-            mdtUserList.Open strSQL, gobjConnection.Connection, _
-                adOpenKeyset, adLockBatchOptimistic, adCmdText
+            // fill mdtUserList
 
         }
 
         public void GetClientIssues(string pstrClientCode , bool pblnUnresolvedIssuesOnly = false){
-            //Dim strSQL 
-    
-            //strSQL = _
-            //    "SELECT IssueID, " +
-            //            "fkClientCode, " +
-            //            "IssuePriority , " +
-            //            "IssueSubject, " +
-            //            "IssueDescription, " +
-            //            "ProgressNotes, " +
-            //            "fkAssignedToDeveloper, " +
-            //            "IssueOpenDate, " +
-            //            "TargetCompletionDate, " +
-            //            "CompletedDate, " +
-            //            "fkAddedByDeveloper " +
-            //    "FROM ClientIssue " +
-            //    "WHERE fkClientCode = '" & pstrClientCode & "' "
 
+            string strSQL    
+            strSQL = "SELECT IssueID, " +
+                        "fkClientCode, " +
+                        "IssuePriority , " +
+                        "IssueSubject, " +
+                        "IssueDescription, " +
+                        "ProgressNotes, " +
+                        "fkAssignedToDeveloper, " +
+                        "IssueOpenDate, " +
+                        "TargetCompletionDate, " +
+                        "CompletedDate, " +
+                        "fkAddedByDeveloper " +
+                "FROM ClientIssue " +
+                "WHERE fkClientCode = '" + pstrClientCode + "'";
+
+            if (pblnUnresolvedIssuesOnly){
+                strSQL = strSQL + " AND CompletedDate IS NULL ";
+            }
     
-            //If pblnUnresolvedIssuesOnly Then
-            //    strSQL = strSQL & " AND CompletedDate IS NULL "
-            //End If
+            strSQL = strSQL + "ORDER BY IssuePriority ASC";
     
-            //strSQL = strSQL & "ORDER BY IssuePriority ASC"
-    
-            //If mrstIssues.State = adStateOpen Then mrstIssues.Close
-            //mrstIssues.CursorLocation = adUseClient
-    
-            //mrstIssues.Open strSQL, gobjConnection.Connection, _
-            //    adOpenKeyset, adLockBatchOptimistic, adCmdText
+            if (mdtIssues != null){ 
+                mdtIssues = null;
+            }
+
+            // Fill issues datatable
+
         }
 
         public bool Save(){
 
-        //    On Error GoTo PROC_ERROR
-
-        //    Const c_strSource  = "SupportCenter.clsClient.Save"
-
-        //    Save = False
         //    With mdtClient
         
         //        If .EOF Then
@@ -559,16 +549,7 @@ namespace SupportCenter
     
         //        .UpdateBatch
         //    End With
-        //    Save = True
 
-        //PROC_EXIT:
-
-        //    Exit Function
-
-        //PROC_ERROR:
-
-        //    Call ErrorHandler(c_strSource)
-        //    GoTo PROC_EXIT
             return true;
         }
 
@@ -588,18 +569,18 @@ namespace SupportCenter
             strSQL = "INSERT INTO ClaimsUser( ClaimsUserCode, ClaimsUser, fkClientCode, " +
                 "                        CreatedDateTime, CreatedUser, ModifiedDateTime, " +
                 "                        ModifiedUser ) " +
-                "  valueS( '" + pstrUserCode + "', '" + pstrUserName + "', " +
-                "          '" + mstrClientCode + "', '" + DateTime.Now + "', '" + gstrDeveloperCode + "', " +
-                "          '" + DateTime.Now + "', '" + gstrDeveloperCode + "' ) ";
+                "  values( '" + pstrUserCode + "', '" + pstrUserName + "', " +
+                "          '" + mstrClientCode + "', '" + DateTime.Now + "', '" + clsGlobal.DeveloperCode + "', " +
+                "          '" + DateTime.Now + "', '" + clsGlobal.DeveloperCode + "' ) ";
         
             //gobjConnection.Connection.Execute strSQL
 
         }
 
-        public string GetTopClientIssues(string pstrClientCode){ 
-    
-        //    Dim strSQL 
-        //    Dim strClientIssues 
+        public string GetTopClientIssues(string pstrClientCode){
+
+            string strSQL;
+            string strClientIssues = "";
     
         //    strSQL = "SELECT dbo.fnGetTop3IssuesForClient('" & pstrClientCode & "') AS TopIssues"
         //    strClientIssues = gobjConnection.Connection.Execute(strSQL)!TopIssues
@@ -608,22 +589,14 @@ namespace SupportCenter
         //        strClientIssues = Mid$(strClientIssues, 1, Len(strClientIssues) - 2)
         //    End If
     
-        //    GetTopClientIssues = strClientIssues
-    
-
-        //PROC_EXIT:
-        //    Exit Function
-        //PROC_ERROR:
-        //    Call ErrorHandler(c_strSource)
-        //    GoTo PROC_EXIT
-            return "";
+            return strClientIssues;
         }
 
-        public string GetAllClientIssues(string pstrClientCode){ 
+        public string GetAllClientIssues(string pstrClientCode){
 
-    
-        //    Dim strSQL 
-        //    Dim strClientIssues 
+
+            string strSQL;
+            string strClientIssues = "";
     
         //    strSQL = "SELECT dbo.fnGetAllOpenIssuesForClient('" & pstrClientCode & "') AS TopIssues"
         //    strClientIssues = gobjConnection.Connection.Execute(strSQL)!TopIssues
@@ -631,16 +604,8 @@ namespace SupportCenter
         //    If Len(strClientIssues) > 0 Then
         //        strClientIssues = Mid$(strClientIssues, 1, Len(strClientIssues) - 2)
         //    End If
-    
-        //    GetAllClientIssues = strClientIssues
-    
 
-        //PROC_EXIT:
-        //    Exit Function
-        //PROC_ERROR:
-        //    Call ErrorHandler(c_strSource)
-        //    GoTo PROC_EXIT
-            return "";
+            return strClientIssues;
         }
 
         public string GetLastCommunication(string pstrClientCode){ 
@@ -667,14 +632,6 @@ namespace SupportCenter
         //        GetLastCommunication = null
         //    End If
 
-        //
-        //PROC_EXIT:
-        //    Set rstLastCommunication = Nothing
-        //    Exit Function
-        //PROC_ERROR:
-        //    Call ErrorHandler(c_strSource)
-        //    GoTo PROC_EXIT
-        //
             return "";
         }
 

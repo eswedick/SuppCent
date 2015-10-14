@@ -17,12 +17,8 @@ namespace SupportCenter
         private DataTable mdtClientList;
         private DataTable mdtCurrentClientContactList;
 
-        //public Event CurrentClientChanged(pstrCurrentClientCode As String)
+        //public Event CurrentClientChanged(pstrCurrentClientCode )
         //public Event ClientListChanged()
-
-        //----------------------------------------------------------------------------------------------
-        //                                          PROPERTIES
-        //----------------------------------------------------------------------------------------------
 
         public string CurrentClaimsUser{
             get{
@@ -56,7 +52,7 @@ namespace SupportCenter
 
         public DataTable ClientList{
             get{
-                return mrstClientList;
+                return mdtClientList;
             }
         }
 
@@ -93,8 +89,8 @@ namespace SupportCenter
 
         private void Class_Terminate(){
     
-            mrstClientList = null;
-            mrstCurrentClientContactList = null;
+            //mrstClientList = null;
+            //mrstCurrentClientContactList = null;
 
         }
 
@@ -104,347 +100,313 @@ namespace SupportCenter
 
         public string ClientCodeFromName(string pstrClientName){
         
-            mdtClientList.Find "ClientName= '" & pstrClientName & "'", , , adBookmarkFirst
-        
-            if (Not mdtClientList.EOF) {
-                return .Fields("ClientCode").Value();
-            }
-            else {
+            DataRow[] drResults;
+            DataRow drRow;
+            drResults = mdtClientList.Select("ClientName LIKE '" + pstrClientName + "'");
+
+            if (drResults != null){
+                drRow = drResults[0];
+                return drRow["ClientCode"].ToString();      
+            } else{
                 return null;
             }
-
         }
 
-        public void ConfigureClientCombo(pcboClient As SSOleDBCombo, bool pblnIncludeAllAsChoice = true){
+        public void ConfigureClientCombo(bool pblnIncludeAllAsChoice = true){
 
-            int intColPosition;
-            string strSeparator;
-            string strNewRow;
+            //int intColPosition;
+            //string strSeparator;
+            //string strNewRow;
 
-            With pcboClient
-                .DataMode = ssDataModeAddItem
-                .BackColorEven = &HFFFFFF
-                .BackColorOdd = &HC0FFFF
-                .ForeColorEven = &H0&
-                .ForeColorOdd = &H0&
+            //With pcboClient
+            //    .DataMode = ssDataModeAddItem
+            //    .BackColorEven = &HFFFFFF
+            //    .BackColorOdd = &HC0FFFF
+            //    .ForeColorEven = &H0&
+            //    .ForeColorOdd = &H0&
         
-                .Columns.RemoveAll
-                intColPosition = 0
-                .Columns(intColPosition).Name = "ClientCode"
-                .Columns(intColPosition).Caption = "Client Code"
-                .Columns(intColPosition).DataType = vbString
-                intColPosition = intColPosition + 1
+            //    .Columns.RemoveAll
+            //    intColPosition = 0
+            //    .Columns(intColPosition).Name = "ClientCode"
+            //    .Columns(intColPosition).Caption = "Client Code"
+            //    .Columns(intColPosition).DataType = vbString
+            //    intColPosition = intColPosition + 1
         
-                .Columns(intColPosition).Name = "ClientName"
-                .Columns(intColPosition).Caption = "Client Name"
-                .Columns(intColPosition).DataType = vbString
-                intColPosition = intColPosition + 1
+            //    .Columns(intColPosition).Name = "ClientName"
+            //    .Columns(intColPosition).Caption = "Client Name"
+            //    .Columns(intColPosition).DataType = vbString
+            //    intColPosition = intColPosition + 1
             
-                .FieldSeparator = ";"
-                strSeparator = .FieldSeparator
-                .DataFieldList = "Column 0"
-                .DataFieldToDisplay = "Column 1"
-                .RemoveAll
-                .Text = vbNullString
-            End With
+            //    .FieldSeparator = ";"
+            //    strSeparator = .FieldSeparator
+            //    .DataFieldList = "Column 0"
+            //    .DataFieldToDisplay = "Column 1"
+            //    .RemoveAll
+            //    .Text = vbNullString
+            //End With
      
-            If pblnIncludeAllAsChoice Then
-                strNewRow = vbNullString +
-                            strSeparator +
-                            "All"
+            //If pblnIncludeAllAsChoice Then
+            //    strNewRow = vbNullString +
+            //                strSeparator +
+            //                "All"
                     
-                pcboClient.AddItem (strNewRow)
-            End If
+            //    pcboClient.AddItem (strNewRow)
+            //End If
     
-            With mrstClientList
+            //With mrstClientList
         
-                If Not (.BOF And .EOF) Then
+            //    If Not (.BOF And .EOF) Then
             
-                    .MoveFirst
-                    Do Until .EOF
-                        strNewRow = .Fields("ClientCode").Value +
-                                    strSeparator +
-                                    .Fields("ClientName").Value
+            //        .MoveFirst
+            //        Do Until .EOF
+            //            strNewRow = .Fields("ClientCode").Value +
+            //                        strSeparator +
+            //                        .Fields("ClientName").Value
                 
-                        pcboClient.AddItem (strNewRow)
+            //            pcboClient.AddItem (strNewRow)
                 
-                        .MoveNext
-                    Loop
-                End If
-                pcboClient.MoveFirst
+            //            .MoveNext
+            //        Loop
+            //    End If
+            //    pcboClient.MoveFirst
     
-            End With
+            //End With
 
 
         }
 
-        public void ConfigureClaimsUserCombo(pcboClaimsUser As SSOleDBCombo, Optional pblnIncludeAllAsChoice As Boolean = True){
+        public void ConfigureClaimsUserCombo(bool pblnIncludeAllAsChoice = true){
     
-            Dim intColPosition As Integer
-            Dim strSeparator   As String
-            Dim strNewRow      As String
+            //Dim intColPosition As Integer
+            //Dim strSeparator   
+            //Dim strNewRow      
 
-            With pcboClaimsUser
-                .DataMode = ssDataModeAddItem
-                .BackColorEven = &HFFFFFF
-                .BackColorOdd = &HC0FFFF
-                .ForeColorEven = &H0&
-                .ForeColorOdd = &H0&
+            //With pcboClaimsUser
+            //    .DataMode = ssDataModeAddItem
+            //    .BackColorEven = &HFFFFFF
+            //    .BackColorOdd = &HC0FFFF
+            //    .ForeColorEven = &H0&
+            //    .ForeColorOdd = &H0&
         
-                .Columns.RemoveAll
+            //    .Columns.RemoveAll
         
-                intColPosition = 0
-                .Columns(intColPosition).Name = "fkClientCode"
-                .Columns(intColPosition).Caption = "Client Code"
-                .Columns(intColPosition).DataType = vbString
-                intColPosition = intColPosition + 1
+            //    intColPosition = 0
+            //    .Columns(intColPosition).Name = "fkClientCode"
+            //    .Columns(intColPosition).Caption = "Client Code"
+            //    .Columns(intColPosition).DataType = vbString
+            //    intColPosition = intColPosition + 1
         
-                .Columns(intColPosition).Name = "ClaimsUserCode"
-                .Columns(intColPosition).Caption = "User Code"
-                .Columns(intColPosition).DataType = vbString
-                intColPosition = intColPosition + 1
+            //    .Columns(intColPosition).Name = "ClaimsUserCode"
+            //    .Columns(intColPosition).Caption = "User Code"
+            //    .Columns(intColPosition).DataType = vbString
+            //    intColPosition = intColPosition + 1
             
-                .Columns(intColPosition).Name = "ClaimsUserName"
-                .Columns(intColPosition).Caption = "User Name"
-                .Columns(intColPosition).DataType = vbString
-                intColPosition = intColPosition + 1
+            //    .Columns(intColPosition).Name = "ClaimsUserName"
+            //    .Columns(intColPosition).Caption = "User Name"
+            //    .Columns(intColPosition).DataType = vbString
+            //    intColPosition = intColPosition + 1
             
-                .Columns(intColPosition).Name = "PhoneNumber"
-                .Columns(intColPosition).Caption = "Phone"
-                .Columns(intColPosition).DataType = vbString
-                intColPosition = intColPosition + 1
+            //    .Columns(intColPosition).Name = "PhoneNumber"
+            //    .Columns(intColPosition).Caption = "Phone"
+            //    .Columns(intColPosition).DataType = vbString
+            //    intColPosition = intColPosition + 1
         
-                .Columns(intColPosition).Name = "FaxNumber"
-                .Columns(intColPosition).Caption = "Fax"
-                .Columns(intColPosition).DataType = vbString
-                intColPosition = intColPosition + 1
+            //    .Columns(intColPosition).Name = "FaxNumber"
+            //    .Columns(intColPosition).Caption = "Fax"
+            //    .Columns(intColPosition).DataType = vbString
+            //    intColPosition = intColPosition + 1
             
-                .Columns(intColPosition).Name = "EmailAddress"
-                .Columns(intColPosition).Caption = "Email"
-                .Columns(intColPosition).DataType = vbString
-                intColPosition = intColPosition + 1
+            //    .Columns(intColPosition).Name = "EmailAddress"
+            //    .Columns(intColPosition).Caption = "Email"
+            //    .Columns(intColPosition).DataType = vbString
+            //    intColPosition = intColPosition + 1
     
-                .FieldSeparator = ";"
-                strSeparator = .FieldSeparator
-                .DataFieldList = "Column 1"
-                .DataFieldToDisplay = "Column 2"
-                .RemoveAll
-                .Text = vbNullString
-            End With
+            //    .FieldSeparator = ";"
+            //    strSeparator = .FieldSeparator
+            //    .DataFieldList = "Column 1"
+            //    .DataFieldToDisplay = "Column 2"
+            //    .RemoveAll
+            //    .Text = vbNullString
+            //End With
      
-            If pblnIncludeAllAsChoice Then
-                strNewRow = vbNullString +
-                            strSeparator +
-                            "All"
+            //If pblnIncludeAllAsChoice Then
+            //    strNewRow = vbNullString +
+            //                strSeparator +
+            //                "All"
                     
-                pcboClaimsUser.AddItem (strNewRow)
-            End If
+            //    pcboClaimsUser.AddItem (strNewRow)
+            //End If
     
-            With mrstCurrentClientContactList
-                If Not (.BOF And .EOF) Then
-                    .MoveFirst
-                    Do Until .EOF
-                        strNewRow = .Fields("fkClientCode").Value & strSeparator +
-                                    .Fields("ClaimsUserCode").Value & strSeparator +
-                                    .Fields("ClaimsUser").Value & strSeparator +
-                                    .Fields("PhoneNumber").Value & strSeparator +
-                                    .Fields("FaxNumber").Value & strSeparator +
-                                    .Fields("EmailAddress").Value
+            //With mrstCurrentClientContactList
+            //    If Not (.BOF And .EOF) Then
+            //        .MoveFirst
+            //        Do Until .EOF
+            //            strNewRow = .Fields("fkClientCode").Value & strSeparator +
+            //                        .Fields("ClaimsUserCode").Value & strSeparator +
+            //                        .Fields("ClaimsUser").Value & strSeparator +
+            //                        .Fields("PhoneNumber").Value & strSeparator +
+            //                        .Fields("FaxNumber").Value & strSeparator +
+            //                        .Fields("EmailAddress").Value
 
-                        pcboClaimsUser.AddItem (strNewRow)
+            //            pcboClaimsUser.AddItem (strNewRow)
                 
-                        .MoveNext
-                    Loop
-                End If
-                pcboClaimsUser.MoveFirst
-            End With
+            //            .MoveNext
+            //        Loop
+            //    End If
+            //    pcboClaimsUser.MoveFirst
+            //End With
 
         }
 
-        public void SetCurrentClaimsUser(pstrClaimsUserCode As String){
+        public void SetCurrentClaimsUser(string pstrClaimsUserCode){
 
-            mstrCurrentClaimsUser = pstrClaimsUserCode
+            mstrCurrentClaimsUser = pstrClaimsUserCode;
 
         }
 
-        public void FlagClientDataAsChanged(pstrClientCode As String){
+        public void FlagClientDataAsChanged(string pstrClientCode){
 
-            If mstrCurrentClientCode = pstrClientCode Then
-                RaiseEvent CurrentClientChanged(mstrCurrentClientCode)
-            End If
+            //If mstrCurrentClientCode = pstrClientCode Then
+            //    RaiseEvent CurrentClientChanged(mstrCurrentClientCode)
+            //End If
 
         }
 
         public void GetClients(){
-            Dim strSQL As String
+            string strSQL;
 
-            If mrstClientList.State = adStateOpen Then mrstClientList.Close
+            if (mdtClientList != null){
+                mdtClientList = null;
+            }
     
             // Get list of clients from DB.
-            strSQL = _
-                "SELECT ClientCode, ClientName, PrimaryClaimsUserCode, InterfaceClaimsUserCode, " +
+            strSQL = "SELECT ClientCode, ClientName, PrimaryClaimsUserCode, InterfaceClaimsUserCode, " +
                 "       RemoteAccessType, RemoteAccessAddress, SQLServerName, SQLServerIPAddress, " +
                 "       TerminalServerName, TerminalServerIPAddress, Notes, CreatedDateTime, " +
                 "       CreatedUser, ModifiedDateTime, ModifiedUser, Version, D.DeveloperName, fkTechnicalContact, fkPrimaryContactDeveloper " +
                 "  FROM Client " +
                 "   LEFT OUTER JOIN Developer AS D ON D.DeveloperCode = fkPrimaryContactDeveloper " +
-                "  WHERE Active = 1"
+                "  WHERE Active = 1";
 
-            mrstClientList.CursorLocation = adUseClient
-            mrstClientList.Open strSQL, gobjConnection.Connection, _
-                adOpenStatic, adLockOptimistic, adCmdText
-        
-            Set GetClients = mrstClientList
+            // fill datatable
     
         }
+
 
         public void ReloadClients(){
 
-            Dim strSQL As String
+            //Dim strSQL 
 
-            If mrstClientList.State = adStateOpen Then mrstClientList.Close
+            //If mrstClientList.State = adStateOpen Then mrstClientList.Close
     
-            // Get list of clients from DB.
-            strSQL = _
-                "SELECT ClientCode, ClientName, PrimaryClaimsUserCode, InterfaceClaimsUserCode, " +
-                "       RemoteAccessType, RemoteAccessAddress, SQLServerName, SQLServerIPAddress, " +
-                "       TerminalServerName, TerminalServerIPAddress, Notes, CreatedDateTime, " +
-                "       CreatedUser, ModifiedDateTime, ModifiedUser, Version, D.DeveloperName, fkTechnicalContact, fkPrimaryContactDeveloper " +
-                "  FROM Client " +
-                "   LEFT OUTER JOIN Developer AS D ON D.DeveloperCode = fkPrimaryContactDeveloper " +
-                "  WHERE Active = 1"
+            //// Get list of clients from DB.
+            //strSQL = _
+            //    "SELECT ClientCode, ClientName, PrimaryClaimsUserCode, InterfaceClaimsUserCode, " +
+            //    "       RemoteAccessType, RemoteAccessAddress, SQLServerName, SQLServerIPAddress, " +
+            //    "       TerminalServerName, TerminalServerIPAddress, Notes, CreatedDateTime, " +
+            //    "       CreatedUser, ModifiedDateTime, ModifiedUser, Version, D.DeveloperName, fkTechnicalContact, fkPrimaryContactDeveloper " +
+            //    "  FROM Client " +
+            //    "   LEFT OUTER JOIN Developer AS D ON D.DeveloperCode = fkPrimaryContactDeveloper " +
+            //    "  WHERE Active = 1"
 
-            mrstClientList.Open strSQL, gobjConnection.Connection, _
-                adOpenKeyset, adLockOptimistic, adCmdText
+            //mrstClientList.Open strSQL, gobjConnection.Connection, _
+            //    adOpenKeyset, adLockOptimistic, adCmdText
     
-            RaiseEvent ClientListChanged
+            //RaiseEvent ClientListChanged
 
         }
 
 
-        public void SetCurrentClient(pstrCurrentClientCode As String){
+        public void SetCurrentClient(string pstrCurrentClientCode){
     
-            Dim strSQL  As String
+            string strSQL;
     
-            With mrstClientList
-    
-                .Find "ClientCode = '" & pstrCurrentClientCode & "'", , , adBookmarkFirst
-        
-                If Not .EOF Then
-                    mrstCurrentClientContactList.Close
-            
-                    strSQL = _
-                        "SELECT ClaimsUserCode, ClaimsUser, fkClientCode, PhoneNumber, FaxNumber, " +
-                        "       EMailAddress, CreatedDateTime, CreatedUser, ModifiedDateTime, " +
-                        "       ModifiedUser " +
-                        "  FROM ClaimsUser " +
-                        " WHERE fkClientCode = '" & .Fields("ClientCode").Value & "'"
-                        
-                    mrstCurrentClientContactList.Open strSQL, gobjConnection.Connection, _
-                        adOpenKeyset, adLockOptimistic, adCmdText
-             
-                    mstrCurrentClientName = .Fields("ClientName").Value
-                    mstrCurrentClientCode = .Fields("ClientCode").Value
-                    mstrCurrentClientPrimaryUser = _
-                        IfNull(.Fields("PrimaryClaimsUserCode").Value, vbNullString)
-             
-                    RaiseEvent CurrentClientChanged(.Fields("ClientCode").Value)
-                Else
-                    mstrCurrentClientName = vbNullString
-                    mstrCurrentClientCode = vbNullString
-                    mstrCurrentClientPrimaryUser = vbNullString
-                End If
-    
-            End With
+            DataRow[] drResults;
+            DataRow drRow;
+
+            //get client row
+            drResults = mdtClientList.Select("ClientCode LIKE '" + pstrCurrentClientCode + "'");
+
+            if (drResults != null){
+                mdtCurrentClientContactList = null;
+
+                // get Current Client Contact List
+
+
+                // get property strings
+                drRow = drResults[0]; 
+                mstrCurrentClientName = drRow["ClientName"].ToString();
+                mstrCurrentClientCode = drRow["ClientCode"].ToString();
+                mstrCurrentClientPrimaryUser = drRow["PrimaryClaimsUserCode"].ToString() ?? null;
+
+
+            } else {
+                mstrCurrentClientName = null;
+                mstrCurrentClientCode = null;
+                mstrCurrentClientPrimaryUser = null;
+            }     
 
         }
 
         public string GetCurrentProductionVersion(){
-    
-            On Error GoTo PROC_ERROR
-            Const c_strSource As String = "SupportCenter.clsClientList.GetCurrentProductionVersion"
-    
-            Dim strSQL As String
-            Dim rstCurrentVersion As ADODB.Recordset
-    
-            GetCurrentProductionVersion = vbNullString
-    
-            strSQL = "SELECT LatestVersionNumber FROM Project"
-    
-            Set rstCurrentVersion = New ADODB.Recordset
-            Call rstCurrentVersion.Open(strSQL, gobjConnection.Connection)
-    
-            With rstCurrentVersion
-                If Not (.EOF And .BOF) Then
-                    If .RecordCount > 0 Then
-                        .MoveFirst
-                        GetCurrentProductionVersion = !LatestVersionNumber
-                    End If
-                End If
-            End With
-    
 
-        PROC_EXIT:
-            Exit Function
-        PROC_ERROR:
-            Call ErrorHandler(c_strSource)
-            GoTo PROC_EXIT
+            string strSQL;
+            DataTable dtCurrentVersion;
+    
+            strSQL = "SELECT LatestVersionNumber FROM Project";
+    
+            // execute query
 
+
+
+            //get latest version
+            //return row["LatestVersion"].ToString();
+            return "";
+    
         }
 
-        public bool NewVersionAvailable(ByVal pstrLatestVersion As String, _
-                                            ByVal pstrClientVersion As String, _
-                                            Optional ByVal plngMinMajorVersionDifference As Long = 1, _
-                                            Optional ByVal plngMinMinorVersionDifference As Long = 1, _
-                                            Optional ByVal plngMinRevisionVersionDifference As Long = 1){}
+        public bool NewVersionAvailable(string pstrLatestVersion, string pstrClientVersion, int pintMinMajorVersionDifference = 1, int pintMinMinorVersionDifference = 1, int pintMinRevisionVersionDifference = 1){
     
-            On Error GoTo PROC_ERROR
-            Const c_strSource As String = "SupportCenter.frmClientList.NewVersionAvailable"
-    
-    
-            Dim lngProductionSegment As Long
-            Dim lngClientSegment As Long
-            Dim strProductionRestOfString As String
-            Dim strClientRestOfString As String
+            int intProductionSegment; 
+            int intClientSegment; 
+            string strProductionRestOfString ;
+            string strClientRestOfString;
     
             //check major version
-            lngProductionSegment = Val(Mid$(pstrLatestVersion, 1, InStr(pstrLatestVersion, ".")))
-            lngClientSegment = Val(Mid$(pstrClientVersion, 1, InStr(pstrClientVersion, ".")))
+            intProductionSegment = 0;
+            intClientSegment = 1;
     
-            If lngProductionSegment >= lngClientSegment + plngMinMajorVersionDifference Then
-                NewVersionAvailable = True
-                GoTo PROC_EXIT
-            End If
+            if (intProductionSegment >= intClientSegment + pintMinMajorVersionDifference){
+                return true;
+            }
     
-            strProductionRestOfString = Mid$(pstrLatestVersion, InStr(pstrLatestVersion, ".") + 1, 999) & ".." 'appending .. so that following functions will work
-            strClientRestOfString = Mid$(pstrClientVersion, InStr(pstrClientVersion, ".") + 1, 999) & ".." 'appending .. so that following functions will work
+            //strProductionRestOfString = Mid$(pstrLatestVersion, InStr(pstrLatestVersion, ".") + 1, 999) & "..";  //appending .. so that following functions will work
+            //strClientRestOfString = Mid$(pstrClientVersion, InStr(pstrClientVersion, ".") + 1, 999) & ".."   ;   //appending .. so that following functions will work
     
             //check minor version
-            lngProductionSegment = Val(Mid$(strProductionRestOfString, 1, InStr(strProductionRestOfString, ".")))
-            lngClientSegment = Val(Mid$(strClientRestOfString, 1, InStr(strClientRestOfString, ".")))
+            //intProductionSegment = Val(Mid$(strProductionRestOfString, 1, InStr(strProductionRestOfString, ".")));
+            //intClientSegment = Val(Mid$(strClientRestOfString, 1, InStr(strClientRestOfString, ".")));
     
-            If lngProductionSegment >= lngClientSegment + plngMinMinorVersionDifference Then
-                NewVersionAvailable = True
-                GoTo PROC_EXIT
-            End If
+            if (intProductionSegment >= intClientSegment + pintMinMinorVersionDifference){
+                return true;
+            }
     
-            strProductionRestOfString = Mid$(strProductionRestOfString, InStr(strProductionRestOfString, "."), 999)
-            strClientRestOfString = Mid$(strClientRestOfString, InStr(strClientRestOfString, "."))
+            //strProductionRestOfString = Mid$(strProductionRestOfString, InStr(strProductionRestOfString, "."), 999);
+            //strClientRestOfString = Mid$(strClientRestOfString, InStr(strClientRestOfString, "."));
     
             //check revision version
-            lngProductionSegment = Val(Mid$(strProductionRestOfString, 1, InStr(strProductionRestOfString, ".")))
-            lngClientSegment = Val(Mid$(strClientRestOfString, 1, InStr(strClientRestOfString, ".")))
+            //intProductionSegment = Val(Mid$(strProductionRestOfString, 1, InStr(strProductionRestOfString, ".")));
+            //intClientSegment = Val(Mid$(strClientRestOfString, 1, InStr(strClientRestOfString, ".")));
     
-            If lngProductionSegment >= lngClientSegment + plngMinRevisionVersionDifference Then
-                NewVersionAvailable = True
-                GoTo PROC_EXIT
-            End If
+            if (intProductionSegment >= intClientSegment + pintMinRevisionVersionDifference){
+                return true;
+            }
     
-            strProductionRestOfString = Mid$(pstrLatestVersion, InStr(pstrLatestVersion, "."), 999)
-            strClientRestOfString = Mid$(pstrClientVersion, InStr(pstrClientVersion, "."))
+            //strProductionRestOfString = Mid$(pstrLatestVersion, InStr(pstrLatestVersion, "."), 999);
+            //strClientRestOfString = Mid$(pstrClientVersion, InStr(pstrClientVersion, "."));
     
             //no problem!
-            NewVersionAvailable = False
+            return false;
 
 
         }
