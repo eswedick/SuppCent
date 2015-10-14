@@ -445,7 +445,7 @@ namespace SupportCenter
 
         public void GetClientIssues(string pstrClientCode , bool pblnUnresolvedIssuesOnly = false){
 
-            string strSQL    
+            string strSQL;    
             strSQL = "SELECT IssueID, " +
                         "fkClientCode, " +
                         "IssuePriority , " +

@@ -14,11 +14,11 @@ namespace SupportCenter
         {
             get
             {
-                return strConnectionString;
+                return gstrConnectionString;
             }
             set
             {
-                strConnectionString = value;
+                gstrConnectionString = value;
             }
         }
 
@@ -36,5 +36,23 @@ namespace SupportCenter
                 gstrDeveloperCode = value;
             }
         }
+
+
+        // UserName
+        static string gstrUserName = "";
+        public static string UserName
+        {
+            get
+            {
+                return gstrUserName;
+            }
+            set
+            {
+                gstrUserName = value;
+            }
+        }
+
+
+        //Email
     }
 }
