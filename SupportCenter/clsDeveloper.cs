@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,83 +10,96 @@ namespace SupportCenter
     class clsDeveloper
     {
 
-//Private mstrDeveloperCode As String
-//Private mstrDeveloperName As String
-//Private mrstDeveloperList As ADODB.Recordset
-//Private mstrMSResourceName As String
+        private string mstrDeveloperCode;
+        private string mstrDeveloperName;
+        private DataTable mdtDeveloperList;
+        private string mstrMSResourceName;
 
-//Public Property Get MSResourceName() As String
-//    MSResourceName = mstrMSResourceName
-//End Property
+//----------------------------------------------------------------------------------------------
+//                                          PROPERTIES
+//----------------------------------------------------------------------------------------------
 
-////----------------------------------------------------------------------------------------------
-////                                          PROPERTIES
-////----------------------------------------------------------------------------------------------
+        public string DeveloperName
+        {
+            get
+            {
+                return mstrDeveloperName;
+            }
+            set
+            {
+                mstrDeveloperName = value;'
+            }
+        }
 
-//Public Property Get DeveloperName() As String
-//    DeveloperName = mstrDeveloperName
-//End Property
+        public string DeveloperCode{
+            get{
+                return mstrDeveloperCode;
+            }
+            set{
+                mstrDeveloperCode = value;
+            }
+        }
 
-//Public Property Get DeveloperCode() As String
-//    DeveloperCode = mstrDeveloperCode
-//End Property
+        //----------------------*
+        // READ-ONLY PROPERTIES *
+        //----------------------*
+        public DataTable DeveloperList{
+            get{
+                return mrstDeveloperList;
+                }
+        }
 
-////----------------------*
-//// READ-ONLY PROPERTIES *
-////----------------------*
-//Public Property Get DeveloperList() As ADODB.Recordset
-//    Set DeveloperList = mrstDeveloperList
-//End Property
+        public string MSResourceName{
+            get{
+                return mstrMSResourceName;
+                }
+        }
 
-////----------------------------------------------------------------------------------------------
-////                                            EVENTS
-////----------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+//                                            EVENTS
+//----------------------------------------------------------------------------------------------
 
-//Private Sub Class_Initialize()
+//private Sub Class_Initialize()
 
 //    Dim strSQL As String
     
 //    // Get list of developers from DB.
 //'msp    strSQL = _
-//        "SELECT DeveloperCode, DeveloperName, UserName, MSResourceName " & _
+//        "SELECT DeveloperCode, DeveloperName, UserName, MSResourceName " +
 //        "  FROM Developer "
         
 //    strSQL = _
-//        "SELECT DeveloperCode, DeveloperName, UserName " & _
+//        "SELECT DeveloperCode, DeveloperName, UserName " +
 //        "  FROM Developer "
 
-//    Set mrstDeveloperList = New ADODB.Recordset
-//    mrstDeveloperList.Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockOptimistic
+//    Set mdtDeveloperList = New ADODB.Recordset
+//    mdtDeveloperList.Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockOptimistic
     
 //End Sub
 
-//Private Sub Class_Terminate()
+//private Sub Class_Terminate()
 
 //    On Error Resume Next
     
-//    Set mrstDeveloperList = Nothing
+//    Set mdtDeveloperList = Nothing
 
 //End Sub
 
-////----------------------------------------------------------------------------------------------
-////                                       PUBLIC PROCEDURES
-////----------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+//                                       public PROCEDURES
+//----------------------------------------------------------------------------------------------
 
-//Public Sub SetDeveloper(pstrUserName As String)
+        public void SetDeveloper(string pstrUserName){
     
-//    With mrstDeveloperList
-//        .Find "UserName = '" & pstrUserName & "'", , , adBookmarkFirst
-        
-//        If Not .EOF Then
-//            mstrDeveloperCode = .Fields("DeveloperCode").Value
-//            mstrDeveloperName = .Fields("DeveloperName").Value
-//'msp            mstrMSResourceName = IfNull(.Fields("MSResourceName").Value, vbNullString)
-//        End If
-//    End With
+            //With mdtDeveloperList .Find "UserName = '" & pstrUserName & "'"        
+            if (.EOF != true){
+                mstrDeveloperCode = .Fields("DeveloperCode").Value;
+                mstrDeveloperName = .Fields("DeveloperName").Value;
+            }
 
-//End Sub
+        }
 
-//Public Sub ConfigureDeveloperCombo(pcboDeveloper As SSOleDBCombo, _
+//public Sub ConfigureDeveloperCombo(pcboDeveloper As SSOleDBCombo, _
 //                                Optional pblnIncludeAllAsChoice As Boolean = True)
 
 //    Dim intColPosition As Integer
@@ -120,17 +134,17 @@ namespace SupportCenter
 //    End With
      
 //    If pblnIncludeAllAsChoice Then
-//        strNewRow = vbNullString & strSeparator & _
+//        strNewRow = vbNullString & strSeparator +
 //                    "All"
                     
 //        pcboDeveloper.AddItem (strNewRow)
 //    End If
     
-//    With mrstDeveloperList
+//    With mdtDeveloperList
 //        If Not (.BOF And .EOF) Then
 //            .MoveFirst
 //            Do Until .EOF
-//                strNewRow = .Fields("DeveloperCode").Value & strSeparator & _
+//                strNewRow = .Fields("DeveloperCode").Value & strSeparator +
 //                            .Fields("DeveloperName").Value
                 
 //                pcboDeveloper.AddItem (strNewRow)
@@ -143,36 +157,33 @@ namespace SupportCenter
 
 //End Sub
 
-//Public Sub GetIssueCounts(ByVal pdtmStartDate As Date, _
-//                            ByVal pdtmEndDate As Date, _
-//                            ByRef plngIssuesOpened As Long, _
-//                            ByRef plngIssuesClosed As Long, _
-//                            Optional ByVal pblnGetAllDevelopers As Boolean = False)
+        public void GetIssueCounts(DateTime pdtmStartDate, DateTime pdtmEndDate, int pintIssuesOpened, int pintIssuesClosed, bool pblnGetAllDevelopers = false){
     
-//    Dim strSQL As String
+            string strSQL;
     
-//    strSQL = "SELECT COUNT(*) AS IssueCount " & _
-//            "FROM ClientIssue " & _
-//            "WHERE IssueOpenDate BETWEEN '" & pdtmStartDate & "' AND '" & pdtmEndDate & "' "
-//    If Not pblnGetAllDevelopers Then
-//        strSQL = strSQL & "AND fkAddedByDeveloper = '" & mstrDeveloperCode & "' "
-//    End If
+            //TODO rewrite as one query
+            strSQL = "SELECT COUNT(*) AS IssueCount " +
+                    "FROM ClientIssue " +
+                    "WHERE IssueOpenDate BETWEEN '" + pdtmStartDate + "' AND '" + pdtmEndDate + "' ";
+            if (pblnGetAllDevelopers != true){
+                strSQL = strSQL & "AND fkAddedByDeveloper = '" + mstrDeveloperCode + "' ";
+            }
 
-//    plngIssuesOpened = gobjConnection.Connection.Execute(strSQL)!IssueCount
+            //plngIssuesOpened = gobjConnection.Connection.Execute(strSQL)!IssueCount
     
-//    strSQL = "SELECT COUNT(*) AS IssueCount " & _
-//            "FROM ClientIssue AS CI " & _
-//                "INNER JOIN Client AS C ON C.ClientCode = CI.fkClientCode " & _
-//            "WHERE CompletedDate BETWEEN '" & pdtmStartDate & "' AND '" & pdtmEndDate & "' "
-//    If Not pblnGetAllDevelopers Then
-//        strSQL = strSQL & "AND ISNULL(CI.fkAssignedToDeveloper, C.fkPrimaryContactDeveloper) = '" & mstrDeveloperCode & "' "
-//    End If
+            strSQL = "SELECT COUNT(*) AS IssueCount " +
+                    "FROM ClientIssue AS CI " +
+                        "INNER JOIN Client AS C ON C.ClientCode = CI.fkClientCode " +
+                    "WHERE CompletedDate BETWEEN '" + pdtmStartDate + "' AND '" + pdtmEndDate + "' ";
+            if (pblnGetAllDevelopers != true){
+                strSQL = strSQL + "AND ISNULL(CI.fkAssignedToDeveloper, C.fkPrimaryContactDeveloper) = '" + mstrDeveloperCode + "' ";
+            }
 
-//    plngIssuesClosed = gobjConnection.Connection.Execute(strSQL)!IssueCount
+            //plngIssuesClosed = gobjConnection.Connection.Execute(strSQL)!IssueCount;
 
-//End Sub
+        }
 
-//Public Sub GetContactTimes(ByVal pdtmStartDate As Date, _
+//public Sub GetContactTimes(ByVal pdtmStartDate As Date, _
 //                            ByVal pdtmEndDate As Date, _
 //                            ByRef plngSupportMinutes As Long, _
 //                            ByRef plngMaintenanceMinutes As Long, _
@@ -180,8 +191,8 @@ namespace SupportCenter
 
 //    Dim strSQL As String
     
-//    strSQL = "SELECT ISNULL(SUM(SupportMinutes), 0) AS SupportMinutes " & _
-//            "FROM Task " & _
+//    strSQL = "SELECT ISNULL(SUM(SupportMinutes), 0) AS SupportMinutes " +
+//            "FROM Task " +
 //            "WHERE TaskDate BETWEEN '" & pdtmStartDate & "' AND '" & pdtmEndDate & "' "
     
 //    If Not pblnGetAllDevelopers Then
@@ -191,8 +202,8 @@ namespace SupportCenter
 //    plngSupportMinutes = gobjConnection.Connection.Execute(strSQL)!SupportMinutes
     
     
-//    strSQL = "SELECT ISNULL(SUM(MaintenanceMinutes), 0) AS MaintenanceMinutes " & _
-//            "FROM Task " & _
+//    strSQL = "SELECT ISNULL(SUM(MaintenanceMinutes), 0) AS MaintenanceMinutes " +
+//            "FROM Task " +
 //            "WHERE TaskDate BETWEEN '" & pdtmStartDate & "' AND '" & pdtmEndDate & "' "
     
 //    If Not pblnGetAllDevelopers Then
@@ -203,11 +214,11 @@ namespace SupportCenter
 //End Sub
 
 
-//Public Function GetDaysSinceLastTimesheetEntry() As Long
+//public Function GetDaysSinceLastTimesheetEntry() As Long
 //    Dim strSQL As String
     
-//    strSQL = "SELECT MIN(DATEDIFF(d, EndDateTime, getdate())) AS LengthOfTime " & _
-//            "FROM ActivityLog " & _
+//    strSQL = "SELECT MIN(DATEDIFF(d, EndDateTime, getdate())) AS LengthOfTime " +
+//            "FROM ActivityLog " +
 //            "WHERE fkDeveloperCode = '" & mstrDeveloperCode & "'"
     
 //    GetDaysSinceLastTimesheetEntry = IfNull(gobjConnection.Connection.Execute(strSQL)!LengthOfTime, 99)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,305 +10,288 @@ namespace SupportCenter
     class clsTask
     {
 
-//Const mc_intMinMinutesToCharge = 5
-//Const mc_intRoundToIncrement = 15
+        const int mc_intMinMinutesToCharge = 5;
+        const int mc_intRoundToIncrement = 15;
 
-//Private mintMinutes          As Integer
-//Private mlngTaskID           As Long
-//Private mdatTaskDate         As Date
-//Private mstrfkDeveloperCode  As String
-//Private mstrfkClientCode     As String
-//Private mstrfkClaimsUserCode As String
-//Private mstrIssue            As String
-//Private mstrTaskType         As String
-//Private mrstActivityList     As ADODB.Recordset
-//Private mrstTask             As ADODB.Recordset
+        private int mintMinutes;
+        private int mintTaskID;
+        private DateTime mdatTaskDate;
+        private string mstrfkDeveloperCode;
+        private string mstrfkClientCode;
+        private string mstrfkClaimsUserCode; 
+        private string mstrIssue;           
+        private string mstrTaskType;        
+        private DataTable mdtActivityList;     
+        private DataTable mdtTask;            
 
-////----------------------------------------------------------------------------------------------
-////                                          PROPERTIES
-////----------------------------------------------------------------------------------------------
+        ////----------------------------------------------------------------------------------------------
+        ////                                          PROPERTIES
+        ////----------------------------------------------------------------------------------------------
 
-//Public Property Get ActivityMinutes() As Integer
-    
-//    Dim intActivityMinutes As Integer
-    
-//    With mrstActivityList
-//        If .RecordCount < 1 Then
-//            intActivityMinutes = 0
-//        Else
-//            .MoveFirst
-//            Do Until .EOF
-            
-//                intActivityMinutes = intActivityMinutes + .Fields("DurationMinutes").Value
-//                .MoveNext
-//            Loop
-//        End If
-//    End With
-    
-//    ActivityMinutes = intActivityMinutes
+        public DataTable ActivityList{
+            get{
+                return mdtActivityList;
+            }
+        }
 
-//End Property
-//Public Property Get ActivityList() As ADODB.Recordset
-//    Set ActivityList = mrstActivityList
-//End Property
+        public string TaskType{
+            get{
+                return mstrTaskType;
+            }
+            set{
+                mstrTaskType = value;
+            }
+        }
 
-//Public Property Get TaskType() As String
-//    TaskType = mstrTaskType
-//End Property
-//Public Property Let TaskType(ByVal Value As String)
-//    mstrTaskType = Value
-//End Property
-
-//Public Property Get Minutes() As Integer
-//    Minutes = mintMinutes
-//End Property
-//Public Property Let Minutes(ByVal Value As Integer)
-//    mintMinutes = Value
-//End Property
-
-//Public Property Get Issue() As String
-//    Issue = mstrIssue
-//End Property
-//Public Property Let Issue(ByVal Value As String)
-//    mstrIssue = Value
-//End Property
-
-//Public Property Get fkClaimsUserCode() As String
-//    fkClaimsUserCode = mstrfkClaimsUserCode
-//End Property
-//Public Property Let fkClaimsUserCode(ByVal Value As String)
-//    mstrfkClaimsUserCode = Value
-//End Property
-
-//Public Property Get fkClientCode() As String
-//    fkClientCode = mstrfkClientCode
-//End Property
-//Public Property Let fkClientCode(ByVal Value As String)
-//    mstrfkClientCode = Value
-//End Property
-
-//Public Property Get TaskDate() As Date
-//    TaskDate = mdatTaskDate
-//End Property
-//Public Property Let TaskDate(ByVal Value As Date)
-//    mdatTaskDate = Value
-//End Property
-
-//Public Property Get fkDeveloperCode() As String
-//    fkDeveloperCode = mstrfkDeveloperCode
-//End Property
-//Public Property Let fkDeveloperCode(ByVal Value As String)
-//    mstrfkDeveloperCode = Value
-//End Property
-
-////----------------------*
-//// READ-ONLY PROPERTIES *
-////----------------------*
-//Public Property Get TaskID() As Long
-//    TaskID = mlngTaskID
-//End Property
-
-////----------------------------------------------------------------------------------------------
-////                                            EVENTS
-////----------------------------------------------------------------------------------------------
-
-//Private Sub Class_Initialize()
-    
-//    Set mrstTask = New ADODB.Recordset
-//    Set mrstActivityList = New ADODB.Recordset
-
-//End Sub
-
-//Private Sub Class_Terminate()
-    
-//    On Error Resume Next
-    
-//    Set mrstTask = Nothing
-//    Set mrstActivityList = Nothing
-
-//End Sub
-
-////----------------------------------------------------------------------------------------------
-////                                       PUBLIC PROCEDURES
-////----------------------------------------------------------------------------------------------
-
-////----------------------------------------------------------------------------------------------
-////     Project:    SupportCenter
-////   Procedure:    DeleteTask
-//// Description:    Delete the specified task from the DB.
-////  Created By:    Richard M. Conlan - 5/17/2004
-////
-////  Parameters:    plngTaskID (Long)
-////----------------------------------------------------------------------------------------------
-//Public Sub DeleteTask(plngTaskID As Long)
-
-//    Dim strSQL As String
-    
-//    strSQL = _
-//        "DELETE FROM Task " & _
-//        " WHERE TaskID = '" & plngTaskID & "' "
+        public int Minutes{
+            get{
+                return mintMinutes;
+            }
+            set{
+                mintMinutes = value;
+            }
+        }
         
-//    gobjConnection.Connection.Execute strSQL
+        public string Issue{
+            get{
+                return mstrIssue;
+            }
+            set{
+                mstrIssue = value;
+            }
+        }
 
-//End Sub
-
-//Public Sub EditTask(plngTaskID As Long)
-    
-//    Dim strSQL As String
-    
-//    If mrstTask.State = adStateOpen Then mrstTask.Close
-//    If mrstActivityList.State = adStateOpen Then mrstActivityList.Close
-    
-//    strSQL = _
-//        "SELECT TaskID, fkDeveloperCode, TaskDate, fkClientCode, fkClaimsUserCode, " & _
-//        "       Issue, SupportMinutes, MaintenanceMinutes, TaskType, CreatedDateTime, " & _
-//        "       CreatedUser, ModifiedDateTime, ModifiedUser " & _
-//        "  FROM Task " & _
-//        " WHERE TaskID = " & plngTaskID
-    
-//    With mrstTask
-//        .Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockOptimistic, adCmdText
+        public string fkClaimsUserCode{
+            get{
+                return mstrfkClaimsUserCode;
+            }
+            set{
+                mstrfkClaimsUserCode = value;
+            }
+        }
         
-//        If .EOF Then
-//            mlngTaskID = -1
-//            mstrfkDeveloperCode = vbNullString
-//            mdatTaskDate = Date
-//            mstrfkClientCode = vbNullString
-//            mstrfkClaimsUserCode = vbNullString
-//            mstrIssue = vbNullString
-//            mintMinutes = 0
-//            mstrTaskType = "SUPPORT"
-//        Else
-//            mlngTaskID = .Fields("TaskID").Value
-//            mstrfkDeveloperCode = .Fields("fkDeveloperCode").Value
-//            mdatTaskDate = .Fields("TaskDate").Value
-//            mstrfkClientCode = .Fields("fkClientCode").Value
-//            mstrfkClaimsUserCode = .Fields("fkClaimsUserCode").Value
-//            mstrIssue = .Fields("Issue").Value
-//            mintMinutes = IfNull(.Fields("SupportMinutes").Value, 0) + _
-//                IfNull(.Fields("MaintenanceMinutes").Value, 0)
-            
-//            If IfNull(.Fields("TaskType").Value, vbNullString) = vbNullString Then
-//                If mintMinutes < 1 Then
-//                    mstrTaskType = "MAINTENANCE"
-//                ElseIf IfNull(.Fields("SupportMinutes").Value, 0) > 0 Then
-//                    mstrTaskType = "SUPPORT"
-//                Else
-//                    mstrTaskType = "MAINTENANCE"
-//                End If
-            
-//            Else
-//                mstrTaskType = .Fields("TaskType").Value
-//            End If
-            
-//        End If
-//    End With
-    
-//    // Get the activity log for the specified task from the DB.
-//    strSQL = _
-//        "SELECT CallLogID, StartDateTime, EndDateTime, Subject, Description, " & _
-//        "       fkClaimsUserCode, fkClientCode, fkDeveloperCode, fkTaskID, " & _
-//        "       fkActivityCode, DurationMinutes, InternalOrExternal, OpenItemID " & _
-//        "  FROM ActivityLog " & _
-//        " WHERE fkTaskID = " & mlngTaskID
+        public string fkClientCode{
+            get{
+                return mstrfkClientCode;    
+            }
+            set{
+                mstrfkClientCode = value;
+            }
+        }
 
-//    mrstActivityList.Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockReadOnly
+        public DateTime TaskDate{
+            get{
+                return mdatTaskDate;
+            }    
+            set{
+                mdatTaskDate = value;
+            }
+        }
 
-//End Sub
+        public string fkDeveloperCode{
+            get{
+                return mstrfkDeveloperCode;
+            }
+            set{
+                mstrfkDeveloperCode = value;
+            }
+        }
 
-//Public Function GetRoundedMinutes(pintMinutes As Integer) As Integer
+        //----------------------*
+        // READ-ONLY PROPERTIES *
+        //----------------------*
+        public int TaskID{
+            get{
+                return mintTaskID;
+            }
+        }
 
-//    GetRoundedMinutes = _
-//            Round((pintMinutes / mc_intRoundToIncrement), 0) * mc_intRoundToIncrement
+        public int ActivityMinutes
+        {
+            get
+            {
+                int intActivityMinutes = 0;
+                foreach (DataRow row in mdtActivityList.Rows)
+                {
+                    int minutes = int.Parse(row["DurationMinutes"].ToString());
+                    intActivityMinutes += minutes;
+                }
 
-//    If GetRoundedMinutes < mc_intMinMinutesToCharge Then
-//        GetRoundedMinutes = mc_intMinMinutesToCharge
-//    End If
+                return intActivityMinutes;
+            }
+        }
 
-//End Function
+        ////----------------------------------------------------------------------------------------------
+        ////                                            EVENTS
+        ////----------------------------------------------------------------------------------------------
 
-//Public Sub NewTask()
+        //private Sub Class_Initialize()
     
-//    Dim strSQL As String
-    
-//    If mrstTask.State = adStateOpen Then mrstTask.Close
-//    If mrstActivityList.State = adStateOpen Then mrstActivityList.Close
-    
-//    // Get list of tasks from the DB.
-//    strSQL = _
-//        "SELECT TaskID, fkDeveloperCode, TaskDate, fkClientCode, fkClaimsUserCode, " & _
-//        "       Issue, SupportMinutes, MaintenanceMinutes, TaskType, CreatedDateTime, " & _
-//        "       CreatedUser, ModifiedDateTime, ModifiedUser " & _
-//        "  FROM Task " & _
-//        " WHERE 1=2"
-    
-//    mrstTask.Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockOptimistic, adCmdText
-    
-//    mlngTaskID = -1
-//    mstrfkDeveloperCode = vbNullString
-//    mdatTaskDate = Date
-//    mstrfkClientCode = vbNullString
-//    mstrfkClaimsUserCode = vbNullString
-//    mstrIssue = vbNullString
-//    mintMinutes = 0
-//    mstrTaskType = "SUPPORT"
-    
-//    // Get list of activity logs not associated with tasks from DB.
-//    strSQL = _
-//        "SELECT CallLogID, StartDateTime, EndDateTime, Subject, Description, " & _
-//        "       fkClaimsUserCode, fkClientCode, fkDeveloperCode, fkTaskID, " & _
-//        "       fkActivityCode, DurationMinutes, InternalOrExternal, OpenItemID " & _
-//        "  FROM ActivityLog " & _
-//        " WHERE fkTaskID = -1 "
-    
-//    mrstActivityList.Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockReadOnly
-    
-//End Sub
+        //    Set mdtTask = New ADODB.Recordset
+        //    Set mdtActivityList = New ADODB.Recordset
 
-//Public Function Save(penuFormState As FormState) As Boolean
+        //}
+
+        //private Sub Class_Terminate()
     
-//    On Error GoTo PROC_ERROR
+        //    On Error Resume Next
+    
+        //    Set mdtTask = Nothing
+        //    Set mdtActivityList = Nothing
 
-//    Const c_strSource As String = "SupportCenter.clsTask.Save"
+        //}
 
-//    Save = False
-//    With mrstTask
+        //----------------------------------------------------------------------------------------------
+        //                                       public PROCEDURES
+        //----------------------------------------------------------------------------------------------
+
+        public void DeleteTask(int pintTaskID){
+
+            string strSQL;
+    
+            strSQL = "DELETE FROM Task WHERE TaskID = '" + pintTaskID + "' ";
         
-//        If penuFormState = jmaAddMode Then
-//            .AddNew
-//        End If
+            //gobjConnection.Connection.Execute strSQL
+
+        }
+
+        public void EditTask(int pintTaskID){
+            
+            string strSQL;
+            DataRow drTaskRow;
     
-//        .Fields("fkDeveloperCode").Value = mstrfkDeveloperCode
-//        .Fields("TaskDate").Value = mdatTaskDate
-//        .Fields("fkClientCode").Value = mstrfkClientCode
-//        .Fields("fkClaimsUserCode").Value = mstrfkClaimsUserCode
-//        .Fields("Issue").Value = mstrIssue
-//        .Fields("TaskType").Value = mstrTaskType
-//        If mstrTaskType = "SUPPORT" Then
-//            .Fields("SupportMinutes").Value = GetRoundedMinutes(mintMinutes)
-//            .Fields("MaintenanceMinutes").Value = 0
-//        Else
-//            .Fields("SupportMinutes").Value = 0
-//            .Fields("MaintenanceMinutes").Value = GetRoundedMinutes(mintMinutes)
-//        End If
+            if (mdtTask != null){
+                mdtTask = null;
+            }
     
-//        .Update
-//        mlngTaskID = .Fields("TaskID").Value
-        
-//    End With
+            //TODO rewrite as one query
+
+            // Get the task from the db
+            strSQL = "SELECT TaskID, fkDeveloperCode, TaskDate, fkClientCode, fkClaimsUserCode, " +
+                "       Issue, SupportMinutes, MaintenanceMinutes, TaskType, CreatedDateTime, " +
+                "       CreatedUser, ModifiedDateTime, ModifiedUser " +
+                "  FROM Task " +
+                " WHERE TaskID = " + pintTaskID;
     
-//    Save = True
+            //mdtTask.Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockOptimistic, adCmdText
+            
+            // Get the activity log for the specified task from the DB.
+            strSQL = "SELECT CallLogID, StartDateTime, EndDateTime, Subject, Description, " +
+                "       fkClaimsUserCode, fkClientCode, fkDeveloperCode, fkTaskID, " +
+                "       fkActivityCode, DurationMinutes, InternalOrExternal, OpenItemID " +
+                "  FROM ActivityLog " +
+                " WHERE fkTaskID = " + mintTaskID;
 
-//PROC_EXIT:
+            //mdtActivityList.Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockReadOnly
 
-//    Exit Function
+            if (mdtTask == null){
+                mintTaskID = -1;
+                mstrfkDeveloperCode = null;
+                mdatTaskDate = DateTime.Today;
+                mstrfkClientCode = null;
+                mstrfkClaimsUserCode = null;
+                mstrIssue = null;
+                mintMinutes = 0;
+                mstrTaskType = "SUPPORT";
+            }
+            else {
+                drTaskRow = mdtTask[0];
+                mintTaskID = .Fields("TaskID").Value;
+                mstrfkDeveloperCode = .Fields("fkDeveloperCode").Value;
+                mdatTaskDate = .Fields("TaskDate").Value;
+                mstrfkClientCode = .Fields("fkClientCode").Value;
+                mstrfkClaimsUserCode = .Fields("fkClaimsUserCode").Value;
+                mstrIssue = .Fields("Issue").Value;
+                mintMinutes = IfNull(.Fields("SupportMinutes").Value, 0) + IfNull(.Fields("MaintenanceMinutes").Value, 0);
+            
+                if (mdtTask[0]("TaskType").Value ?? 0 == 0){ 
+                    if (mintMinutes < 1){
+                        mstrTaskType = "MAINTENANCE";
+                    }
+                    else if (IfNull(.Fields("SupportMinutes").Value, 0) > 0){
+                        mstrTaskType = "SUPPORT";
+                    }
+                    else{
+                        mstrTaskType = "MAINTENANCE";
+                    }
+                }
+            }
+        }
 
-//PROC_ERROR:
+        public int GetRoundedMinutes(int pintMinutes){
 
-//    Call ErrorHandler(c_strSource)
-//    GoTo PROC_EXIT
+            GetRoundedMinutes = Round((pintMinutes / mc_intRoundToIncrement), 0) * mc_intRoundToIncrement
 
-//End Function
+            if (GetRoundedMinutes < mc_intMinMinutesToCharge){
+                GetRoundedMinutes = mc_intMinMinutesToCharge;
+            }
+
+        }
+
+        public void NewTask(){
+    
+            string strSQL;
+    
+            if (mdtTask != null){
+                mdtTask = null;
+            }
+    
+            // Get list of tasks from the DB.
+            strSQL = "SELECT TaskID, fkDeveloperCode, TaskDate, fkClientCode, fkClaimsUserCode, " +
+                "       Issue, SupportMinutes, MaintenanceMinutes, TaskType, CreatedDateTime, " +
+                "       CreatedUser, ModifiedDateTime, ModifiedUser " +
+                "  FROM Task " +
+                " WHERE 1=2";
+    
+            //mdtTask.Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockOptimistic, adCmdText
+    
+            mintTaskID = -1
+            mstrfkDeveloperCode = null
+            mdatTaskDate = Date
+            mstrfkClientCode = null
+            mstrfkClaimsUserCode = null
+            mstrIssue = null
+            mintMinutes = 0
+            mstrTaskType = "SUPPORT"
+    
+            // Get list of activity logs not associated with tasks from DB.
+            strSQL = _
+                "SELECT CallLogID, StartDateTime, EndDateTime, Subject, Description, "+
+                "       fkClaimsUserCode, fkClientCode, fkDeveloperCode, fkTaskID, "+
+                "       fkActivityCode, DurationMinutes, InternalOrExternal, OpenItemID "+
+                "  FROM ActivityLog "+
+                " WHERE fkTaskID = -1 "
+    
+            mdtActivityList.Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockReadOnly
+    
+        }
+
+        public bool Save(penuFormState As FormState){
+
+            If penuFormState = jmaAddMode Then
+                .AddNew
+            End If
+    
+            .Fields("fkDeveloperCode").Value = mstrfkDeveloperCode
+            .Fields("TaskDate").Value = mdatTaskDate
+            .Fields("fkClientCode").Value = mstrfkClientCode
+            .Fields("fkClaimsUserCode").Value = mstrfkClaimsUserCode
+            .Fields("Issue").Value = mstrIssue
+            .Fields("TaskType").Value = mstrTaskType
+            If mstrTaskType = "SUPPORT" Then
+                .Fields("SupportMinutes").Value = GetRoundedMinutes(mintMinutes)
+                .Fields("MaintenanceMinutes").Value = 0
+            else
+                .Fields("SupportMinutes").Value = 0
+                .Fields("MaintenanceMinutes").Value = GetRoundedMinutes(mintMinutes)
+            End If
+    
+            .Update
+            mintTaskID = .Fields("TaskID").Value
+
+            return true;
+
+        }
 
     }
 }
