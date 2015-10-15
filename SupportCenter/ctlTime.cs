@@ -17,6 +17,16 @@ namespace SupportCenter
             InitializeComponent();
         }
 
+        private void ctlTime_Load(object sender, EventArgs e)
+        {
+            //if new init
+
+
+            //else get data
+                //set fields 
+
+        }
+
         private void dtpStartTime_ValueChanged(object sender, EventArgs e)
         {
             if (dtpStartTime.Value.ToShortDateString() != dtpEndTime.Value.ToShortDateString()) {    // update date of dtpEndTime
@@ -30,6 +40,8 @@ namespace SupportCenter
                 dtpStartTime.Value = dtpEndTime.Value;
             }
         }
+
+
 
     }
 }
