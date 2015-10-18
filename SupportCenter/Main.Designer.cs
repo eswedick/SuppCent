@@ -87,36 +87,37 @@
             // clientViewMenuItem
             // 
             this.clientViewMenuItem.Name = "clientViewMenuItem";
-            this.clientViewMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.clientViewMenuItem.Size = new System.Drawing.Size(152, 22);
             this.clientViewMenuItem.Text = "Client";
             this.clientViewMenuItem.Click += new System.EventHandler(this.clientToolStripMenuItem1_Click);
             // 
             // itemViewMenuItem
             // 
             this.itemViewMenuItem.Name = "itemViewMenuItem";
-            this.itemViewMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.itemViewMenuItem.Size = new System.Drawing.Size(152, 22);
             this.itemViewMenuItem.Text = "Item";
             this.itemViewMenuItem.Click += new System.EventHandler(this.itemToolStripMenuItem1_Click);
             // 
             // bugViewMenuItem
             // 
             this.bugViewMenuItem.Name = "bugViewMenuItem";
-            this.bugViewMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.bugViewMenuItem.Size = new System.Drawing.Size(152, 22);
             this.bugViewMenuItem.Text = "Bug";
             this.bugViewMenuItem.Click += new System.EventHandler(this.bugToolStripMenuItem1_Click);
             // 
             // timesheetViewMenuItem
             // 
             this.timesheetViewMenuItem.Name = "timesheetViewMenuItem";
-            this.timesheetViewMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.timesheetViewMenuItem.Size = new System.Drawing.Size(152, 22);
             this.timesheetViewMenuItem.Text = "Timesheet";
             this.timesheetViewMenuItem.Click += new System.EventHandler(this.timesheetToolStripMenuItem_Click);
             // 
             // devDocViewMenuItem
             // 
             this.devDocViewMenuItem.Name = "devDocViewMenuItem";
-            this.devDocViewMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.devDocViewMenuItem.Size = new System.Drawing.Size(152, 22);
             this.devDocViewMenuItem.Text = "Dev Doc";
+            this.devDocViewMenuItem.Click += new System.EventHandler(this.devDocViewMenuItem_Click);
             // 
             // maintenanceToolStripMenuItem
             // 
@@ -189,7 +190,7 @@
             this.showAllOpenMenuItem,
             this.showAllClientIssuesMenuItem});
             this.openItemsToolStripMenuItem.Name = "openItemsToolStripMenuItem";
-            this.openItemsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openItemsToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.openItemsToolStripMenuItem.Text = "Open Items";
             // 
             // showCurrentMenuItem

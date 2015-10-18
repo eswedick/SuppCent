@@ -22,7 +22,7 @@ namespace SupportCenter
                         "WHERE C.Active = 1 " +
                             "AND CI.fkAssignedToDeveloper = '" + pstrDeveloperCode + "'";
 
-
+            dtOpenItems = Database.Query(strSQL);
 
             return dtOpenItems;
         }

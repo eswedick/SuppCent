@@ -572,18 +572,15 @@ namespace SupportCenter
                 "  values( '" + pstrUserCode + "', '" + pstrUserName + "', " +
                 "          '" + mstrClientCode + "', '" + DateTime.Now + "', '" + clsGlobal.DeveloperCode + "', " +
                 "          '" + DateTime.Now + "', '" + clsGlobal.DeveloperCode + "' ) ";
-        
-            //gobjConnection.Connection.Execute strSQL
+
+            Database.Execute(strSQL);
 
         }
 
         public string GetTopClientIssues(string pstrClientCode){
 
-            string strSQL;
-            string strClientIssues = "";
-    
-        //    strSQL = "SELECT dbo.fnGetTop3IssuesForClient('" & pstrClientCode & "') AS TopIssues"
-        //    strClientIssues = gobjConnection.Connection.Execute(strSQL)!TopIssues
+            string strSQL = "SELECT dbo.fnGetTop3IssuesForClient('" + pstrClientCode + "') AS TopIssues";
+            string strClientIssues = Database.QueryAndReturn(strSQL, "TopIssues");
     
         //    If Len(strClientIssues) > 0 Then
         //        strClientIssues = Mid$(strClientIssues, 1, Len(strClientIssues) - 2)

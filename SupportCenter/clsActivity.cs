@@ -161,10 +161,8 @@ private void Class_Initialize(){
     
     // Get activity codes from DB.
     strSQL = "SELECT ActivityCode, ActivityDescription, InternalOrExternal FROM ActivityType ";
-    
-    //Set mrstActivityCodes = New ADODB.Recordset
-    //mrstActivityCodes.Open strSQL, gobjConnection.Connection, _
-    //    adOpenStatic, adLockReadOnly, adCmdText
+
+    mdtActivityCodes = Database.Query(strSQL);
 
     //Set mrstActivityLog = New ADODB.Recordset
 
@@ -256,8 +254,8 @@ public void DeleteActivity(int pintCallLogID){
     string strSQL;
     
     strSQL = "DELETE FROM ActivityLog WHERE CallLogID = " + pintCallLogID + "";
-        
-    //gobjConnection.Connection.Execute strSQL
+
+    Database.Execute(strSQL);
 
 }
 
@@ -267,12 +265,11 @@ public void EditActivity(int pintCallLogID){
     
     //If mrstActivityLog.State = adStateOpen Then mrstActivityLog.Close
     
-    //strSQL = _
-    //    "SELECT CallLogID, StartDateTime, EndDateTime, voidject, Description, "+
-    //    "       fkClaimsUserCode, fkClientCode, fkDeveloperCode, fkTaskID, fkActivityCode, "+
-    //    "       DurationMinutes, InternalOrExternal, OpenItemID "+
-    //    "  FROM ActivityLog "+
-    //    " WHERE CallLogID = " & plngCallLogID
+    strSQL = "SELECT CallLogID, StartDateTime, EndDateTime, voidject, Description, " +
+            "       fkClaimsUserCode, fkClientCode, fkDeveloperCode, fkTaskID, fkActivityCode, " +
+            "       DurationMinutes, InternalOrExternal, OpenItemID " +
+            "  FROM ActivityLog " +
+            " WHERE CallLogID = " + pintCallLogID;
     
     //With mrstActivityLog
     //    .Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockOptimistic, adCmdText

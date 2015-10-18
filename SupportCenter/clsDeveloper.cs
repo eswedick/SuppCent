@@ -65,14 +65,7 @@ namespace SupportCenter
             // Get list of developers from DB.
             string strSQL = "SELECT DeveloperCode, DeveloperName, UserName FROM Developer ";
 
-            //mdtDeveloperList.Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockOptimistic
-            using (SqlConnection conn = new SqlConnection(clsGlobal.ConnectionString)){
-                using (SqlCommand cmd = new SqlCommand(strSQL, conn)){
-                    mdtDeveloperList = new DataTable();
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    da.Fill(mdtDeveloperList);
-                }
-            }
+            mdtDeveloperList = Database.Query(strSQL);
 
         }     
 
@@ -171,7 +164,7 @@ namespace SupportCenter
                 strSQL = strSQL + "AND fkAddedByDeveloper = '" + mstrDeveloperCode + "' ";
             }
 
-           // pintIssuesOpened = clsGlobal.Connection.Execute(strSQL)!IssueCount
+            pintIssuesOpened = int.Parse(Database.QueryAndReturn(strSQL, "IssueCount"));
 
             strSQL = "SELECT COUNT(*) AS IssueCount " +
                     "FROM ClientIssue AS CI " +
@@ -181,7 +174,7 @@ namespace SupportCenter
                 strSQL = strSQL + "AND ISNULL(CI.fkAssignedToDeveloper, C.fkPrimaryContactDeveloper) = '" + mstrDeveloperCode + "' ";
             }
 
-            //pintIssuesClosed = clsGlobal.Connection.Execute(strSQL)!IssueCount;
+            pintIssuesClosed = int.Parse(Database.QueryAndReturn(strSQL, "IssuesClosed"));
 
         }
 

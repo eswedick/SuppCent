@@ -20,6 +20,7 @@ namespace SupportCenter
         //private ToolStripDropDown ddNewMessage;
 
         private clsDeveloper mobjDeveloper;
+        private clsClientIssues mobjClientIssues;
 
         private DataTable mdtOpenItems;
 
@@ -82,6 +83,18 @@ namespace SupportCenter
 
         }
 
+        private void devDocViewMenuItem_Click(object sender, EventArgs e)
+        {
+            // create new Timesheet control if necessary
+            if (mctlDevDoc == null || this.pnlControlPanel.Controls.Contains(mctlDevDoc) == false)
+            {
+                CreateNewDevDoc();
+            }
+
+            // Show timesheet
+            Control ctl = pnlControlPanel.Controls[pnlControlPanel.Controls.GetChildIndex(mctlDevDoc)];
+            ctl.BringToFront();
+        }
         #region Create Controls
         private void CreateNewClient()
         {
@@ -109,11 +122,10 @@ namespace SupportCenter
 
         private void CreateNewDevDoc()
         {
-            if (this.pnlControlPanel.Controls.Contains(mctlDevDoc) == false)
-            {
-                mctlDevDoc = new ctlDevDoc();
-                
-            }
+            mctlDevDoc = new ctlDevDoc();
+            pnlControlPanel.Controls.Add(mctlDevDoc);
+            pnlControlPanel.Controls[pnlControlPanel.Controls.GetChildIndex(mctlDevDoc)].Dock = DockStyle.Fill;
+            pnlControlPanel.Refresh();
         }
         #endregion
 
@@ -197,8 +209,8 @@ namespace SupportCenter
             //fill data
             RefreshOpenItems();
 
-            // add initial panel
-            CreateNewClient();
+            // add initial panel based on preferences
+            //CreateNewClient();
 
         }
 
@@ -229,7 +241,8 @@ namespace SupportCenter
             // timesheet?
 
             // client issues
-            //mdtOpenItems = mobjClientList.
+            mdtOpenItems = mobjClientIssues.GetOpenItemsForDeveloper(mobjDeveloper.DeveloperCode);
+            grdOpenItems.DataSource = mdtOpenItems;
         }
 
         private void showCurrentMenuItem_Click(object sender, EventArgs e)
@@ -246,8 +259,6 @@ namespace SupportCenter
         {
             // Show all client Issues for the current developer
         }
-
-
 
     }
 }

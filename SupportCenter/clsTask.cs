@@ -150,8 +150,8 @@ namespace SupportCenter
             string strSQL;
     
             strSQL = "DELETE FROM Task WHERE TaskID = '" + pintTaskID + "' ";
-        
-            //gobjConnection.Connection.Execute strSQL
+
+            Database.Execute(strSQL);
 
         }
 
@@ -163,8 +163,6 @@ namespace SupportCenter
             if (mdtTask != null){
                 mdtTask = null;
             }
-    
-            //TODO rewrite as one query
 
             // Get the task from the db
             strSQL = "SELECT TaskID, fkDeveloperCode, TaskDate, fkClientCode, fkClaimsUserCode, " +
@@ -172,8 +170,8 @@ namespace SupportCenter
                 "       CreatedUser, ModifiedDateTime, ModifiedUser " +
                 "  FROM Task " +
                 " WHERE TaskID = " + pintTaskID;
-    
-            //mdtTask.Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockOptimistic, adCmdText
+
+            mdtTask = Database.Query(strSQL);
             
             // Get the activity log for the specified task from the DB.
             strSQL = "SELECT CallLogID, StartDateTime, EndDateTime, Subject, Description, " +
@@ -182,7 +180,7 @@ namespace SupportCenter
                 "  FROM ActivityLog " +
                 " WHERE fkTaskID = " + mintTaskID;
 
-            //mdtActivityList.Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockReadOnly
+            mdtActivityList = Database.Query(strSQL);
 
             if (mdtTask == null){
                 mintTaskID = -1;

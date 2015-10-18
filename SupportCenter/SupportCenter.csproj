@@ -82,6 +82,7 @@
     <Compile Include="ctlItem.Designer.cs">
       <DependentUpon>ctlItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Database.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
