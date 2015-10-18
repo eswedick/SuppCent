@@ -30,25 +30,30 @@
         {
             this.MenuBar = new System.Windows.Forms.MenuStrip();
             this.mtsView = new System.Windows.Forms.ToolStripMenuItem();
-            this.mtsMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.itemToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.bugToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.timesheetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clientViewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemViewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bugViewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.timesheetViewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.devDocViewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.maintenanceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.itemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemMaintenanceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bugMaintenanceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clientMaintenanceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.activitySummaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.billingSheetsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clientListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.preferenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showCurrentMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showAllOpenMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showAllClientIssuesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hotKeysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenItems = new System.Windows.Forms.GroupBox();
             this.grdOpenItems = new System.Windows.Forms.DataGridView();
             this.pnlControlPanel = new System.Windows.Forms.Panel();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.activitySummaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.billingSheetsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clientListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuBar.SuspendLayout();
             this.OpenItems.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdOpenItems)).BeginInit();
@@ -70,75 +75,143 @@
             // mtsView
             // 
             this.mtsView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mtsMenu,
-            this.itemToolStripMenuItem1,
-            this.bugToolStripMenuItem1,
-            this.timesheetToolStripMenuItem});
+            this.clientViewMenuItem,
+            this.itemViewMenuItem,
+            this.bugViewMenuItem,
+            this.timesheetViewMenuItem,
+            this.devDocViewMenuItem});
             this.mtsView.Name = "mtsView";
             this.mtsView.Size = new System.Drawing.Size(44, 20);
             this.mtsView.Text = "View";
             // 
-            // mtsMenu
+            // clientViewMenuItem
             // 
-            this.mtsMenu.Name = "mtsMenu";
-            this.mtsMenu.Size = new System.Drawing.Size(152, 22);
-            this.mtsMenu.Text = "Client";
-            this.mtsMenu.Click += new System.EventHandler(this.clientToolStripMenuItem1_Click);
+            this.clientViewMenuItem.Name = "clientViewMenuItem";
+            this.clientViewMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.clientViewMenuItem.Text = "Client";
+            this.clientViewMenuItem.Click += new System.EventHandler(this.clientToolStripMenuItem1_Click);
             // 
-            // itemToolStripMenuItem1
+            // itemViewMenuItem
             // 
-            this.itemToolStripMenuItem1.Name = "itemToolStripMenuItem1";
-            this.itemToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.itemToolStripMenuItem1.Text = "Item";
-            this.itemToolStripMenuItem1.Click += new System.EventHandler(this.itemToolStripMenuItem1_Click);
+            this.itemViewMenuItem.Name = "itemViewMenuItem";
+            this.itemViewMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.itemViewMenuItem.Text = "Item";
+            this.itemViewMenuItem.Click += new System.EventHandler(this.itemToolStripMenuItem1_Click);
             // 
-            // bugToolStripMenuItem1
+            // bugViewMenuItem
             // 
-            this.bugToolStripMenuItem1.Name = "bugToolStripMenuItem1";
-            this.bugToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.bugToolStripMenuItem1.Text = "Bug";
-            this.bugToolStripMenuItem1.Click += new System.EventHandler(this.bugToolStripMenuItem1_Click);
+            this.bugViewMenuItem.Name = "bugViewMenuItem";
+            this.bugViewMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.bugViewMenuItem.Text = "Bug";
+            this.bugViewMenuItem.Click += new System.EventHandler(this.bugToolStripMenuItem1_Click);
             // 
-            // timesheetToolStripMenuItem
+            // timesheetViewMenuItem
             // 
-            this.timesheetToolStripMenuItem.Name = "timesheetToolStripMenuItem";
-            this.timesheetToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.timesheetToolStripMenuItem.Text = "Timesheet";
-            this.timesheetToolStripMenuItem.Click += new System.EventHandler(this.timesheetToolStripMenuItem_Click);
+            this.timesheetViewMenuItem.Name = "timesheetViewMenuItem";
+            this.timesheetViewMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.timesheetViewMenuItem.Text = "Timesheet";
+            this.timesheetViewMenuItem.Click += new System.EventHandler(this.timesheetToolStripMenuItem_Click);
+            // 
+            // devDocViewMenuItem
+            // 
+            this.devDocViewMenuItem.Name = "devDocViewMenuItem";
+            this.devDocViewMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.devDocViewMenuItem.Text = "Dev Doc";
             // 
             // maintenanceToolStripMenuItem
             // 
             this.maintenanceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.itemToolStripMenuItem,
-            this.bugToolStripMenuItem,
-            this.clientToolStripMenuItem});
+            this.itemMaintenanceMenuItem,
+            this.bugMaintenanceMenuItem,
+            this.clientMaintenanceMenuItem});
             this.maintenanceToolStripMenuItem.Name = "maintenanceToolStripMenuItem";
             this.maintenanceToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
             this.maintenanceToolStripMenuItem.Text = "Maintenance";
             // 
-            // clientToolStripMenuItem
+            // itemMaintenanceMenuItem
             // 
-            this.clientToolStripMenuItem.Name = "clientToolStripMenuItem";
-            this.clientToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.clientToolStripMenuItem.Text = "Client";
+            this.itemMaintenanceMenuItem.Name = "itemMaintenanceMenuItem";
+            this.itemMaintenanceMenuItem.Size = new System.Drawing.Size(105, 22);
+            this.itemMaintenanceMenuItem.Text = "Item";
             // 
-            // itemToolStripMenuItem
+            // bugMaintenanceMenuItem
             // 
-            this.itemToolStripMenuItem.Name = "itemToolStripMenuItem";
-            this.itemToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.itemToolStripMenuItem.Text = "Item";
+            this.bugMaintenanceMenuItem.Name = "bugMaintenanceMenuItem";
+            this.bugMaintenanceMenuItem.Size = new System.Drawing.Size(105, 22);
+            this.bugMaintenanceMenuItem.Text = "Bug";
             // 
-            // bugToolStripMenuItem
+            // clientMaintenanceMenuItem
             // 
-            this.bugToolStripMenuItem.Name = "bugToolStripMenuItem";
-            this.bugToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.bugToolStripMenuItem.Text = "Bug";
+            this.clientMaintenanceMenuItem.Name = "clientMaintenanceMenuItem";
+            this.clientMaintenanceMenuItem.Size = new System.Drawing.Size(105, 22);
+            this.clientMaintenanceMenuItem.Text = "Client";
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.activitySummaryToolStripMenuItem,
+            this.billingSheetsToolStripMenuItem,
+            this.clientListToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // activitySummaryToolStripMenuItem
+            // 
+            this.activitySummaryToolStripMenuItem.Name = "activitySummaryToolStripMenuItem";
+            this.activitySummaryToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.activitySummaryToolStripMenuItem.Text = "Activity Summary";
+            // 
+            // billingSheetsToolStripMenuItem
+            // 
+            this.billingSheetsToolStripMenuItem.Name = "billingSheetsToolStripMenuItem";
+            this.billingSheetsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.billingSheetsToolStripMenuItem.Text = "Billing Sheets";
+            // 
+            // clientListToolStripMenuItem
+            // 
+            this.clientListToolStripMenuItem.Name = "clientListToolStripMenuItem";
+            this.clientListToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.clientListToolStripMenuItem.Text = "Client List";
             // 
             // preferenceToolStripMenuItem
             // 
+            this.preferenceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openItemsToolStripMenuItem});
             this.preferenceToolStripMenuItem.Name = "preferenceToolStripMenuItem";
             this.preferenceToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
             this.preferenceToolStripMenuItem.Text = "Preferences";
+            // 
+            // openItemsToolStripMenuItem
+            // 
+            this.openItemsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showCurrentMenuItem,
+            this.showAllOpenMenuItem,
+            this.showAllClientIssuesMenuItem});
+            this.openItemsToolStripMenuItem.Name = "openItemsToolStripMenuItem";
+            this.openItemsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openItemsToolStripMenuItem.Text = "Open Items";
+            // 
+            // showCurrentMenuItem
+            // 
+            this.showCurrentMenuItem.Name = "showCurrentMenuItem";
+            this.showCurrentMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.showCurrentMenuItem.Text = "Show Current";
+            this.showCurrentMenuItem.Click += new System.EventHandler(this.showCurrentMenuItem_Click);
+            // 
+            // showAllOpenMenuItem
+            // 
+            this.showAllOpenMenuItem.Name = "showAllOpenMenuItem";
+            this.showAllOpenMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.showAllOpenMenuItem.Text = "Show All Assigned";
+            this.showAllOpenMenuItem.Click += new System.EventHandler(this.showAllOpenMenuItem_Click);
+            // 
+            // showAllClientIssuesMenuItem
+            // 
+            this.showAllClientIssuesMenuItem.Name = "showAllClientIssuesMenuItem";
+            this.showAllClientIssuesMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.showAllClientIssuesMenuItem.Text = "Show All Client Issues";
+            this.showAllClientIssuesMenuItem.Click += new System.EventHandler(this.showAllClientIssuesMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -193,34 +266,6 @@
             this.pnlControlPanel.Size = new System.Drawing.Size(712, 567);
             this.pnlControlPanel.TabIndex = 3;
             // 
-            // toolsToolStripMenuItem
-            // 
-            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.activitySummaryToolStripMenuItem,
-            this.billingSheetsToolStripMenuItem,
-            this.clientListToolStripMenuItem});
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.toolsToolStripMenuItem.Text = "Tools";
-            // 
-            // activitySummaryToolStripMenuItem
-            // 
-            this.activitySummaryToolStripMenuItem.Name = "activitySummaryToolStripMenuItem";
-            this.activitySummaryToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.activitySummaryToolStripMenuItem.Text = "Activity Summary";
-            // 
-            // billingSheetsToolStripMenuItem
-            // 
-            this.billingSheetsToolStripMenuItem.Name = "billingSheetsToolStripMenuItem";
-            this.billingSheetsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.billingSheetsToolStripMenuItem.Text = "Billing Sheets";
-            // 
-            // clientListToolStripMenuItem
-            // 
-            this.clientListToolStripMenuItem.Name = "clientListToolStripMenuItem";
-            this.clientListToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.clientListToolStripMenuItem.Text = "Client List";
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -251,13 +296,13 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hotKeysToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mtsMenu;
-        private System.Windows.Forms.ToolStripMenuItem itemToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem bugToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem timesheetToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem clientToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem itemToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem bugToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clientViewMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem itemViewMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bugViewMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem timesheetViewMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clientMaintenanceMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem itemMaintenanceMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bugMaintenanceMenuItem;
         private System.Windows.Forms.GroupBox OpenItems;
         private System.Windows.Forms.DataGridView grdOpenItems;
         private System.Windows.Forms.Panel pnlControlPanel;
@@ -265,6 +310,11 @@
         private System.Windows.Forms.ToolStripMenuItem activitySummaryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem billingSheetsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clientListToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem devDocViewMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openItemsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showAllOpenMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showCurrentMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showAllClientIssuesMenuItem;
     }
 }
 

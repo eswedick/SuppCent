@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,8 +16,12 @@ namespace SupportCenter
         private ctlClient mctlClient;
         private ctlTime mctlTime;
         private ctlItem mctlItem;
+        private ctlDevDoc mctlDevDoc;
         //private ToolStripDropDown ddNewMessage;
 
+        private clsDeveloper mobjDeveloper;
+
+        private DataTable mdtOpenItems;
 
         public frmMain()
         {
@@ -28,6 +33,9 @@ namespace SupportCenter
 
         }
 
+        //-----------------------------------------------
+        // Menu Items
+        //-----------------------------------------------
         private void clientToolStripMenuItem1_Click(object sender, EventArgs e) // Show Client
         {
             // create new Client control if necessary
@@ -74,6 +82,7 @@ namespace SupportCenter
 
         }
 
+        #region Create Controls
         private void CreateNewClient()
         {
             mctlClient = new ctlClient();
@@ -97,6 +106,16 @@ namespace SupportCenter
             pnlControlPanel.Controls[pnlControlPanel.Controls.GetChildIndex(mctlTime)].Dock = DockStyle.Fill;
             pnlControlPanel.Refresh();
         }
+
+        private void CreateNewDevDoc()
+        {
+            if (this.pnlControlPanel.Controls.Contains(mctlDevDoc) == false)
+            {
+                mctlDevDoc = new ctlDevDoc();
+                
+            }
+        }
+        #endregion
 
         private void frmMain_KeyDown(object sender, KeyEventArgs e) // Hot keys
         {
@@ -174,20 +193,13 @@ namespace SupportCenter
 
             //load preferences, security
 
-            //fill dadta
+
+            //fill data
+            RefreshOpenItems();
 
             // add initial panel
             CreateNewClient();
 
-        }
-
-        private void BottomStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void BottomStrip_Click(object sender, EventArgs e)
-        {
         }
 
         //private void tsddNewMessage_Click(object sender, EventArgs e)
@@ -210,6 +222,30 @@ namespace SupportCenter
 
         //}
 
+        private void RefreshOpenItems()
+        {
+            grdOpenItems.Rows.Clear();
+
+            // timesheet?
+
+            // client issues
+            //mdtOpenItems = mobjClientList.
+        }
+
+        private void showCurrentMenuItem_Click(object sender, EventArgs e)
+        {
+            // Show Open Items for this dev cycle and High Importance Client Issues
+        }
+
+        private void showAllOpenMenuItem_Click(object sender, EventArgs e)
+        {
+            // Show all Open Items assigned to the current developer
+        }
+
+        private void showAllClientIssuesMenuItem_Click(object sender, EventArgs e)
+        {
+            // Show all client Issues for the current developer
+        }
 
 
 

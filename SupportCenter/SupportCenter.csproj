@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="clsActivity.cs" />
     <Compile Include="clsClient.cs" />
+    <Compile Include="clsClientIssues.cs" />
     <Compile Include="clsClientList.cs" />
     <Compile Include="clsConnection.cs" />
     <Compile Include="clsDeveloper.cs" />
@@ -62,6 +63,12 @@
     </Compile>
     <Compile Include="ctlClient.Designer.cs">
       <DependentUpon>ctlClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctlDevDoc.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctlDevDoc.Designer.cs">
+      <DependentUpon>ctlDevDoc.cs</DependentUpon>
     </Compile>
     <Compile Include="ctlTime.cs">
       <SubType>UserControl</SubType>
@@ -88,6 +95,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ctlConnectionInfo.resx">
       <DependentUpon>ctlConnectionInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctlDevDoc.resx">
+      <DependentUpon>ctlDevDoc.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ctlTime.resx">
       <DependentUpon>ctlTime.cs</DependentUpon>

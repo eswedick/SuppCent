@@ -195,37 +195,37 @@ namespace SupportCenter
                 mstrTaskType = "SUPPORT";
             }
             else {
-                drTaskRow = mdtTask[0];
-                mintTaskID = .Fields("TaskID").Value;
-                mstrfkDeveloperCode = .Fields("fkDeveloperCode").Value;
-                mdatTaskDate = .Fields("TaskDate").Value;
-                mstrfkClientCode = .Fields("fkClientCode").Value;
-                mstrfkClaimsUserCode = .Fields("fkClaimsUserCode").Value;
-                mstrIssue = .Fields("Issue").Value;
-                mintMinutes = IfNull(.Fields("SupportMinutes").Value, 0) + IfNull(.Fields("MaintenanceMinutes").Value, 0);
+                //drTaskRow = mdtTask[0];
+                //mintTaskID = .Fields("TaskID").Value;
+                //mstrfkDeveloperCode = .Fields("fkDeveloperCode").Value;
+                //mdatTaskDate = .Fields("TaskDate").Value;
+                //mstrfkClientCode = .Fields("fkClientCode").Value;
+                //mstrfkClaimsUserCode = .Fields("fkClaimsUserCode").Value;
+                //mstrIssue = .Fields("Issue").Value;
+                //mintMinutes = IfNull(.Fields("SupportMinutes").Value, 0) + IfNull(.Fields("MaintenanceMinutes").Value, 0);
             
-                if (mdtTask[0]("TaskType").Value ?? 0 == 0){ 
-                    if (mintMinutes < 1){
-                        mstrTaskType = "MAINTENANCE";
-                    }
-                    else if (IfNull(.Fields("SupportMinutes").Value, 0) > 0){
-                        mstrTaskType = "SUPPORT";
-                    }
-                    else{
-                        mstrTaskType = "MAINTENANCE";
-                    }
-                }
+                //if (mdtTask[0]("TaskType").Value ?? 0 == 0){ 
+                //    if (mintMinutes < 1){
+                //        mstrTaskType = "MAINTENANCE";
+                //    }
+                //    else if (IfNull(.Fields("SupportMinutes").Value, 0) > 0){
+                //        mstrTaskType = "SUPPORT";
+                //    }
+                //    else{
+                //        mstrTaskType = "MAINTENANCE";
+                //    }
+                //}
             }
         }
 
         public int GetRoundedMinutes(int pintMinutes){
 
-            GetRoundedMinutes = Round((pintMinutes / mc_intRoundToIncrement), 0) * mc_intRoundToIncrement
+            //GetRoundedMinutes = Round((pintMinutes / mc_intRoundToIncrement), 0) * mc_intRoundToIncrement;
 
-            if (GetRoundedMinutes < mc_intMinMinutesToCharge){
-                GetRoundedMinutes = mc_intMinMinutesToCharge;
-            }
-
+            //if (GetRoundedMinutes < mc_intMinMinutesToCharge){
+            //    GetRoundedMinutes = mc_intMinMinutesToCharge;
+            //}
+            return 0;
         }
 
         public void NewTask(){
@@ -245,49 +245,48 @@ namespace SupportCenter
     
             //mdtTask.Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockOptimistic, adCmdText
     
-            mintTaskID = -1
-            mstrfkDeveloperCode = null
-            mdatTaskDate = Date
-            mstrfkClientCode = null
-            mstrfkClaimsUserCode = null
-            mstrIssue = null
-            mintMinutes = 0
-            mstrTaskType = "SUPPORT"
+            mintTaskID = -1;
+            mstrfkDeveloperCode = null;
+            mdatTaskDate = DateTime.Now;
+            mstrfkClientCode = null;
+            mstrfkClaimsUserCode = null;
+            mstrIssue = null;
+            mintMinutes = 0;
+            mstrTaskType = "SUPPORT";
     
             // Get list of activity logs not associated with tasks from DB.
-            strSQL = _
-                "SELECT CallLogID, StartDateTime, EndDateTime, Subject, Description, "+
-                "       fkClaimsUserCode, fkClientCode, fkDeveloperCode, fkTaskID, "+
-                "       fkActivityCode, DurationMinutes, InternalOrExternal, OpenItemID "+
-                "  FROM ActivityLog "+
-                " WHERE fkTaskID = -1 "
+            strSQL = "SELECT CallLogID, StartDateTime, EndDateTime, Subject, Description, " +
+                "       fkClaimsUserCode, fkClientCode, fkDeveloperCode, fkTaskID, " +
+                "       fkActivityCode, DurationMinutes, InternalOrExternal, OpenItemID " +
+                "  FROM ActivityLog " +
+                " WHERE fkTaskID = -1 ";
     
-            mdtActivityList.Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockReadOnly
+            //mdtActivityList.Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockReadOnly
     
         }
 
-        public bool Save(penuFormState As FormState){
+        public bool Save(){
 
-            If penuFormState = jmaAddMode Then
-                .AddNew
-            End If
+            //If penuFormState = jmaAddMode Then
+            //    .AddNew
+            //End If
     
-            .Fields("fkDeveloperCode").Value = mstrfkDeveloperCode
-            .Fields("TaskDate").Value = mdatTaskDate
-            .Fields("fkClientCode").Value = mstrfkClientCode
-            .Fields("fkClaimsUserCode").Value = mstrfkClaimsUserCode
-            .Fields("Issue").Value = mstrIssue
-            .Fields("TaskType").Value = mstrTaskType
-            If mstrTaskType = "SUPPORT" Then
-                .Fields("SupportMinutes").Value = GetRoundedMinutes(mintMinutes)
-                .Fields("MaintenanceMinutes").Value = 0
-            else
-                .Fields("SupportMinutes").Value = 0
-                .Fields("MaintenanceMinutes").Value = GetRoundedMinutes(mintMinutes)
-            End If
+            //.Fields("fkDeveloperCode").Value = mstrfkDeveloperCode
+            //.Fields("TaskDate").Value = mdatTaskDate
+            //.Fields("fkClientCode").Value = mstrfkClientCode
+            //.Fields("fkClaimsUserCode").Value = mstrfkClaimsUserCode
+            //.Fields("Issue").Value = mstrIssue
+            //.Fields("TaskType").Value = mstrTaskType
+            //If mstrTaskType = "SUPPORT" Then
+            //    .Fields("SupportMinutes").Value = GetRoundedMinutes(mintMinutes)
+            //    .Fields("MaintenanceMinutes").Value = 0
+            //else
+            //    .Fields("SupportMinutes").Value = 0
+            //    .Fields("MaintenanceMinutes").Value = GetRoundedMinutes(mintMinutes)
+            //End If
     
-            .Update
-            mintTaskID = .Fields("TaskID").Value
+            //.Update
+            //mintTaskID = .Fields("TaskID").Value
 
             return true;
 

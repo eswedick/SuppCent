@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,7 @@ namespace SupportCenter
             }
             set
             {
-                mstrDeveloperName = value;'
+                mstrDeveloperName = value;
             }
         }
 
@@ -45,7 +46,7 @@ namespace SupportCenter
         //----------------------*
         public DataTable DeveloperList{
             get{
-                return mrstDeveloperList;
+                return mdtDeveloperList;
                 }
         }
 
@@ -59,31 +60,26 @@ namespace SupportCenter
 //                                            EVENTS
 //----------------------------------------------------------------------------------------------
 
-//private Sub Class_Initialize()
+        private void Class_Initialize(){
 
-//    Dim strSQL As String
-    
-//    // Get list of developers from DB.
-//'msp    strSQL = _
-//        "SELECT DeveloperCode, DeveloperName, UserName, MSResourceName " +
-//        "  FROM Developer "
-        
-//    strSQL = _
-//        "SELECT DeveloperCode, DeveloperName, UserName " +
-//        "  FROM Developer "
+            // Get list of developers from DB.
+            string strSQL = "SELECT DeveloperCode, DeveloperName, UserName FROM Developer ";
 
-//    Set mdtDeveloperList = New ADODB.Recordset
-//    mdtDeveloperList.Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockOptimistic
-    
-//End Sub
+            //mdtDeveloperList.Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockOptimistic
+            using (SqlConnection conn = new SqlConnection(clsGlobal.ConnectionString)){
+                using (SqlCommand cmd = new SqlCommand(strSQL, conn)){
+                    mdtDeveloperList = new DataTable();
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(mdtDeveloperList);
+                }
+            }
 
-//private Sub Class_Terminate()
+        }     
 
-//    On Error Resume Next
-    
-//    Set mdtDeveloperList = Nothing
 
-//End Sub
+        //private Sub Class_Terminate(){    
+        //    Set mdtDeveloperList = Nothing
+        //}
 
 //----------------------------------------------------------------------------------------------
 //                                       public PROCEDURES
@@ -91,10 +87,17 @@ namespace SupportCenter
 
         public void SetDeveloper(string pstrUserName){
     
-            //With mdtDeveloperList .Find "UserName = '" & pstrUserName & "'"        
-            if (.EOF != true){
-                mstrDeveloperCode = .Fields("DeveloperCode").Value;
-                mstrDeveloperName = .Fields("DeveloperName").Value;
+            DataRow[] drFilteredRows;
+            DataRow drFilteredRow;
+
+            if (mdtDeveloperList.Rows.Count > 0){
+                drFilteredRows = mdtDeveloperList.Select("UserName LIKE '%" + pstrUserName + "%'");
+
+                if (drFilteredRows[0] != null){
+                    drFilteredRow = drFilteredRows[0];
+                    mstrDeveloperCode = drFilteredRow["DeveloperCode"].ToString();
+                    mstrDeveloperName = drFilteredRow["DeveloperName"].ToString();
+                }
             }
 
         }
@@ -161,16 +164,15 @@ namespace SupportCenter
     
             string strSQL;
     
-            //TODO rewrite as one query
             strSQL = "SELECT COUNT(*) AS IssueCount " +
                     "FROM ClientIssue " +
                     "WHERE IssueOpenDate BETWEEN '" + pdtmStartDate + "' AND '" + pdtmEndDate + "' ";
             if (pblnGetAllDevelopers != true){
-                strSQL = strSQL & "AND fkAddedByDeveloper = '" + mstrDeveloperCode + "' ";
+                strSQL = strSQL + "AND fkAddedByDeveloper = '" + mstrDeveloperCode + "' ";
             }
 
-            //plngIssuesOpened = gobjConnection.Connection.Execute(strSQL)!IssueCount
-    
+           // pintIssuesOpened = clsGlobal.Connection.Execute(strSQL)!IssueCount
+
             strSQL = "SELECT COUNT(*) AS IssueCount " +
                     "FROM ClientIssue AS CI " +
                         "INNER JOIN Client AS C ON C.ClientCode = CI.fkClientCode " +
@@ -179,7 +181,7 @@ namespace SupportCenter
                 strSQL = strSQL + "AND ISNULL(CI.fkAssignedToDeveloper, C.fkPrimaryContactDeveloper) = '" + mstrDeveloperCode + "' ";
             }
 
-            //plngIssuesClosed = gobjConnection.Connection.Execute(strSQL)!IssueCount;
+            //pintIssuesClosed = clsGlobal.Connection.Execute(strSQL)!IssueCount;
 
         }
 

@@ -7,24 +7,25 @@ using System.Threading.Tasks;
 
 namespace SupportCenter
 {
+    // Activities are the 
     class clsActivity
     {
 
-private DateTime mdtmStartDateTime;
-private DateTime mdtmEndDateTime;
-private int mintOpenItemID;
-private string mstrvoidject;
-private string mstrDesription;
-private string mstrfkClaimsUserCode;
-private string mstrfkClientCode;
-private string mstrfkDeveloperCode;
-private string mstrfkActivityCode;
-private int mintfkTaskID;
-private int mintCallLogID;
-private int mintDurationMinutes;
-private string mstrInternalOrExternal;
-private DataTable mdtActivityLog;
-private DataTable mdtActivityCodes;
+        private DateTime mdtmStartDateTime;
+        private DateTime mdtmEndDateTime;
+        private int mintOpenItemID;
+        private string mstrvoidject;
+        private string mstrDesription;
+        private string mstrfkClaimsUserCode;
+        private string mstrfkClientCode;
+        private string mstrfkDeveloperCode;
+        private string mstrfkActivityCode;
+        private int mintfkTaskID;
+        private int mintCallLogID;
+        private int mintDurationMinutes;
+        private string mstrInternalOrExternal;
+        private DataTable mdtActivityLog;
+        private DataTable mdtActivityCodes;
 
 //----------------------------------------------------------------------------------------------
 //                                          PROPERTIES
