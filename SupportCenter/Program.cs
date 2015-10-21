@@ -16,6 +16,8 @@ namespace SupportCenter
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // Choose Database
             Application.Run(new frmMain());
         }
     }

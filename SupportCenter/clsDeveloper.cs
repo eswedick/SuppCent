@@ -182,6 +182,7 @@ namespace SupportCenter
 
             string strSQL;
             string strSupportMinutes;
+            int result;
     
             strSQL = "SELECT ISNULL(SUM(SupportMinutes), 0) AS SupportMinutes " +
                     "FROM Task " +
@@ -194,20 +195,20 @@ namespace SupportCenter
 
             strSupportMinutes = Database.QueryAndReturn(strSQL, "SupportMinutes");
             
-            if(int.TryParse(strSupportMinutes)){
+            //if(int.TryParse(strSupportMinutes, System.Globalization.NumberStyles.Integer, IFormatProvider, result)){
 
-            }
+            //}
     
             strSQL = "SELECT ISNULL(SUM(MaintenanceMinutes), 0) AS MaintenanceMinutes " +
                     "FROM Task " +
-                    "WHERE TaskDate BETWEEN '" & pdtmStartDate & "' AND '" & pdtmEndDate & "' "
+                    "WHERE TaskDate BETWEEN '" + pdtmStartDate + "' AND '" + pdtmEndDate + "' ";
     
-            If Not pblnGetAllDevelopers Then
-                strSQL = strSQL & "AND fkDeveloperCode = '" & mstrDeveloperCode & "' "
-            End If
+            //If Not pblnGetAllDevelopers Then
+            //    strSQL = strSQL & "AND fkDeveloperCode = '" & mstrDeveloperCode & "' "
+            //End If
     
             /// DO NOT USE
-            plngMaintenanceMinutes = gobjConnection.Connection.Execute(strSQL)!MaintenanceMinutes
+            //plngMaintenanceMinutes = gobjConnection.Connection.Execute(strSQL)!MaintenanceMinutes
             //
 
             }

@@ -448,7 +448,7 @@ public void EditActivity(int pintCallLogID){
 ////----------------------------------------------------------------------------------------------
 
         private string GetInternalOrExternal(string pstrActivityCode){
-            string strInternalOrExternal;
+            string strInternalOrExternal = "";
 
             //With mdtactivitycodes .Find "ActivityCode = '" & pstrActivityCode & "'", , , adBookmarkFirst
 
