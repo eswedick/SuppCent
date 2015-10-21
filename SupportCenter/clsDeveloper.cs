@@ -178,35 +178,39 @@ namespace SupportCenter
 
         }
 
-//public Sub GetContactTimes(ByVal pdtmStartDate As Date, _
-//                            ByVal pdtmEndDate As Date, _
-//                            ByRef plngSupportMinutes As Long, _
-//                            ByRef plngMaintenanceMinutes As Long, _
-//                            Optional ByVal pblnGetAllDevelopers As Boolean = False)
+        public void GetContactTimes(DateTime pdtmStartDate, DateTime pdtmEndDate, int pintSupportMinutes, int pintMaintenanceMinutes, bool pblnGetAllDevelopers = false){
 
-//    Dim strSQL As String
+            string strSQL;
+            string strSupportMinutes;
     
-//    strSQL = "SELECT ISNULL(SUM(SupportMinutes), 0) AS SupportMinutes " +
-//            "FROM Task " +
-//            "WHERE TaskDate BETWEEN '" & pdtmStartDate & "' AND '" & pdtmEndDate & "' "
+            strSQL = "SELECT ISNULL(SUM(SupportMinutes), 0) AS SupportMinutes " +
+                    "FROM Task " +
+                    "WHERE TaskDate BETWEEN '" + pdtmStartDate + "' AND '" + pdtmEndDate + "' ";
     
-//    If Not pblnGetAllDevelopers Then
-//        strSQL = strSQL & "AND fkDeveloperCode = '" & mstrDeveloperCode & "' "
-//    End If
+            //TODO FIND ALL PLACES WHERE THE OLD REF PARAMETERS WERE
+            if (!pblnGetAllDevelopers){
+                strSQL = strSQL + "AND fkDeveloperCode = '" + mstrDeveloperCode + "' ";
+            }
 
-//    plngSupportMinutes = gobjConnection.Connection.Execute(strSQL)!SupportMinutes
+            strSupportMinutes = Database.QueryAndReturn(strSQL, "SupportMinutes");
+            
+            if(int.TryParse(strSupportMinutes)){
+
+            }
     
+            strSQL = "SELECT ISNULL(SUM(MaintenanceMinutes), 0) AS MaintenanceMinutes " +
+                    "FROM Task " +
+                    "WHERE TaskDate BETWEEN '" & pdtmStartDate & "' AND '" & pdtmEndDate & "' "
     
-//    strSQL = "SELECT ISNULL(SUM(MaintenanceMinutes), 0) AS MaintenanceMinutes " +
-//            "FROM Task " +
-//            "WHERE TaskDate BETWEEN '" & pdtmStartDate & "' AND '" & pdtmEndDate & "' "
+            If Not pblnGetAllDevelopers Then
+                strSQL = strSQL & "AND fkDeveloperCode = '" & mstrDeveloperCode & "' "
+            End If
     
-//    If Not pblnGetAllDevelopers Then
-//        strSQL = strSQL & "AND fkDeveloperCode = '" & mstrDeveloperCode & "' "
-//    End If
-    
-//    plngMaintenanceMinutes = gobjConnection.Connection.Execute(strSQL)!MaintenanceMinutes
-//End Sub
+            /// DO NOT USE
+            plngMaintenanceMinutes = gobjConnection.Connection.Execute(strSQL)!MaintenanceMinutes
+            //
+
+            }
 
 
 //public Function GetDaysSinceLastTimesheetEntry() As Long
