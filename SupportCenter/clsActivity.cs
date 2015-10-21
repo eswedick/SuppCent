@@ -211,11 +211,11 @@ public void ConfigureActivityCodeCombo(string pstrInternalOrExternalActivities, 
     //    .DataFieldList = "Column 0"
     //    .DataFieldToDisplay = "Column 1"
     //    .RemoveAll
-    //    .Text = vbNullString
+    //    .Text = null
     //End With
      
     //If pblnIncludeAllAsChoice Then
-    //    strNewRow = vbNullString & strSeparator+
+    //    strNewRow = null & strSeparator+
     //                "All"
                     
     //    pcboActivityCode.AddItem (strNewRow)
@@ -278,24 +278,24 @@ public void EditActivity(int pintCallLogID){
     //        mlngOpenItemID = 0
     //        mdtmStartDateTime = Now
     //        mdtmEndDateTime = Now
-    //        mstrvoidject = vbNullString
-    //        mstrDesription = vbNullString
-    //        mstrfkClaimsUserCode = vbNullString
-    //        mstrfkClientCode = vbNullString
-    //        mstrfkDeveloperCode = vbNullString
-    //        mstrfkActivityCode = vbNullString
+    //        mstrvoidject = null
+    //        mstrDesription = null
+    //        mstrfkClaimsUserCode = null
+    //        mstrfkClientCode = null
+    //        mstrfkDeveloperCode = null
+    //        mstrfkActivityCode = null
     //        mlngfkTaskID = -1
     //        mlngCallLogID = -1
     //        mintDurationMinutes = 0
-    //        mstrInternalOrExternal = vbNullString
+    //        mstrInternalOrExternal = null
     //    Else
     //        mlngOpenItemID = IfNull(.Fields("OpenItemID").Value, 0, true, true)
     //        mdtmStartDateTime = .Fields("StartDateTime").Value
     //        mdtmEndDateTime = .Fields("EndDateTime").Value
     //        mstrvoidject = .Fields("voidject").Value
     //        mstrDesription = .Fields("Description").Value
-    //        mstrfkClaimsUserCode = IfNull(.Fields("fkClaimsUserCode").Value, vbNullString, true, true)
-    //        mstrfkClientCode = IfNull(.Fields("fkClientCode").Value, vbNullString, true, true)
+    //        mstrfkClaimsUserCode = IfNull(.Fields("fkClaimsUserCode").Value, null, true, true)
+    //        mstrfkClientCode = IfNull(.Fields("fkClientCode").Value, null, true, true)
     //        mstrfkDeveloperCode = .Fields("fkDeveloperCode").Value
     //        mstrfkActivityCode = .Fields("fkActivityCode").Value
     //        mlngfkTaskID = IfNull(.Fields("fkTaskID").Value, -1, true, true)
@@ -306,119 +306,88 @@ public void EditActivity(int pintCallLogID){
     //End With
 }
 
-//----------------------------------------------------------------------------------------------
-//     Project:    SupportCenter
-//   Procedure:    GetActivityList
-// Description:    Get a filtered activity log list from the DB.
-//  Created By:    Richard M. Conlan - 5/6/2004
-//
-//  Parameters:    pstrClientCode (String)
-//                 pstrDeveloperCode (String)
-//                 pdtmFromDate (Date)
-//                 pdtmToDate (Date)
-//                 pstrInternalOrExtenral (String)
-//                 pstrTaskType (String)
-//     Returns: A recordset containing the filtered activity list.
-//----------------------------------------------------------------------------------------------
-public DataTable GetActivityList(string pstrClientCode, string pstrDeveloperCode, DateTime pdtmFromDate, DateTime pdtmToDate, string pstrInternalOrExternal, string pstrTaskType){
+        public DataTable GetActivityList(string pstrClientCode, string pstrDeveloperCode, DateTime pdtmFromDate, DateTime pdtmToDate, string pstrInternalOrExternal, string pstrTaskType){
     
-    string strSQL;
-    //Dim rstActivityList As ADODB.Recordset
+            string strSQL;
+            DataTable dtActivityList;
 
-    // Get filtered activity log list from DB.
-    strSQL = "SELECT AL.StartDateTime AS Date, D.DeveloperName AS Developer, "+
-        "       C.ClientName AS Client, AL.fkActivityCode AS Activity, "+
-        "       AL.DurationMinutes AS Duration, AL.InternalOrExternal, T.TaskType "+
-        "  FROM ActivityLog AL "+
-        "         INNER JOIN Developer D ON AL.fkDeveloperCode = D.DeveloperCode "+
-        "         INNER JOIN Client C ON AL.fkClientCode = C.ClientCode "+
-        "         INNER JOIN Task T ON AL.fkTaskID = T.TaskID "+
-        " WHERE AL.StartDateTime BETWEEN '" + pdtmFromDate + "' AND '" + pdtmToDate + "' "+
-        "       AND AL.InternalOrExternal = '" + pstrInternalOrExternal + "' "+
-        "       AND T.TaskType = '" + pstrTaskType + "' ";
+            // Get filtered activity log list from DB.
+            strSQL = "SELECT AL.StartDateTime AS Date, D.DeveloperName AS Developer, "+
+                "       C.ClientName AS Client, AL.fkActivityCode AS Activity, "+
+                "       AL.DurationMinutes AS Duration, AL.InternalOrExternal, T.TaskType "+
+                "  FROM ActivityLog AL "+
+                "         INNER JOIN Developer D ON AL.fkDeveloperCode = D.DeveloperCode "+
+                "         INNER JOIN Client C ON AL.fkClientCode = C.ClientCode "+
+                "         INNER JOIN Task T ON AL.fkTaskID = T.TaskID "+
+                " WHERE AL.StartDateTime BETWEEN '" + pdtmFromDate + "' AND '" + pdtmToDate + "' "+
+                "       AND AL.InternalOrExternal = '" + pstrInternalOrExternal + "' "+
+                "       AND T.TaskType = '" + pstrTaskType + "' ";
         
-    // Only filter by client if a client was specified.
-    //If Trim$(pstrClientCode) <> vbNullString Then
-    //    strSQL = strSQL+
-    //        "       AND AL.fkClientCode = '" & pstrClientCode & "' "
-    //End If
-    
-    // Only filter by developer if a developer was specified.
-    //If Trim$(pstrDeveloperCode) <> vbNullString Then
-    //    strSQL = strSQL+
-    //        "       AND AL.fkDeveloperCode = '" & pstrDeveloperCode & "' "
-    //End If
-    
-    //Set rstActivityList = New ADODB.Recordset
-    //rstActivityList.Open strSQL, gobjConnection.Connection, _
-    //    adOpenStatic, adLockReadOnly, adCmdText
-        
-    //Set GetActivityList = rstActivityList
-    return new DataTable();
-}
+            // Only filter by client if a client was specified.
+            if (pstrClientCode == null)
+            {
+                strSQL = strSQL + " AND AL.fkClientCode = '" + pstrClientCode + "' ";
+            }
+            
+            // Only filter by developer if a developer was specified.
+            if (pstrClientCode == null)
+            {
+                strSQL = strSQL + " AND AL.fkDeveloperCode = '" + pstrDeveloperCode + "' ";
+            }
 
-//----------------------------------------------------------------------------------------------
-//     Project:    SupportCenter
-//   Procedure:    GetFilteredDevelopmentActivities
-// Description:    [type_description_here]
-//  Created By:    Richard M. Conlan - 5/17/2004
-//
-//  Parameters:    pstrDeveloperCode (String)
-//                 pdtmFromDate (Date)
-//                 pdtmToDate (Date)
-//     Returns:
-//----------------------------------------------------------------------------------------------
-//public Function GetFilteredDevelopmentActivities( _
-//    pdtmFromDate As Date, pdtmToDate As Date) As ADODB.Recordset
-    
-//    Dim strSQL                           As String
-//    Dim rstFilteredDevelopmentActivities As ADODB.Recordset
-    
-//    // Get filtered activity log list from DB.
-//    strSQL = _
-//        "SELECT CallLogID, fkDeveloperCode, OpenItemID, StartDateTime, EndDateTime, "+
-//        "       voidject, Description, fkActivityCode, DurationMinutes "+
-//        "  FROM ActivityLog "+
-//        " WHERE StartDateTime BETWEEN '" & pdtmFromDate & "' AND '" & pdtmToDate & "' "+
-//        "       AND InternalOrExternal = 'INTERNAL' "
-    
-//    Set rstFilteredDevelopmentActivities = New ADODB.Recordset
-//    rstFilteredDevelopmentActivities.Open strSQL, gobjConnection.Connection, _
-//        adOpenStatic, adLockReadOnly, adCmdText
-        
-//    Set GetFilteredDevelopmentActivities = rstFilteredDevelopmentActivities
+            dtActivityList = Database.Query(strSQL);
 
-//}
+            return dtActivityList;
+        }
 
-//public void NewActivity()
+        public DataTable GetFilteredDevelopmentActivities(DateTime pdtmFromDate, DateTime pdtmToDate){
     
-//    string strSQL;
+            string strSQL;
+            DataTable dtFilteredDevelopmentActivites;
     
-//    If mrstActivityLog.State = adStateOpen Then mrstActivityLog.Close
+            // Get filtered activity log list from DB.
+            strSQL = "SELECT CallLogID, fkDeveloperCode, OpenItemID, StartDateTime, EndDateTime, " +
+                    "       voidject, Description, fkActivityCode, DurationMinutes " +
+                    "  FROM ActivityLog " +
+                    " WHERE StartDateTime BETWEEN '" + pdtmFromDate + "' AND '" + pdtmToDate + "' " +
+                    "       AND InternalOrExternal = 'INTERNAL' ";
     
-//    strSQL = _
-//        "SELECT CallLogID, StartDateTime, EndDateTime, voidject, Description, "+
-//        "       fkClaimsUserCode, fkClientCode, fkDeveloperCode, fkTaskID, fkActivityCode, "+
-//        "       DurationMinutes, InternalOrExternal, OpenItemID "+
-//        "  FROM ActivityLog "+
-//        " WHERE 1=2 "
+            dtFilteredDevelopmentActivites = Database.Query(strSQL);
+
+            return dtFilteredDevelopmentActivites;
+
+        }
+
+        public void NewActivity(){
     
-//    mrstActivityLog.Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockOptimistic
+            string strSQL;
     
-//    mlngOpenItemID = 0
-//    mdtmStartDateTime = Now
-//    mdtmEndDateTime = Now
-//    mstrvoidject = vbNullString
-//    mstrDesription = vbNullString
-//    mstrfkClaimsUserCode = vbNullString
-//    mstrfkClientCode = vbNullString
-//    mstrfkDeveloperCode = vbNullString
-//    mstrfkActivityCode = vbNullString
-//    mlngfkTaskID = -1
-//    mlngCallLogID = -1
-//    mintDurationMinutes = 0
+            if (mdtActivityLog != null){
+                mdtActivityLog = null;
+            }
     
-//}
+            strSQL = "SELECT CallLogID, StartDateTime, EndDateTime, voidject, Description, " +
+                    "       fkClaimsUserCode, fkClientCode, fkDeveloperCode, fkTaskID, fkActivityCode, " +
+                    "       DurationMinutes, InternalOrExternal, OpenItemID " +
+                    " FROM ActivityLog " +
+                    " WHERE 1=2 ";
+    
+            mdtActivityLog = Database.Query(strSQL);
+    
+            mintOpenItemID = 0;
+            mdtmStartDateTime = DateTime.Now;
+            mdtmEndDateTime = DateTime.Now;
+            mstrvoidject = null;
+            mstrDesription = null;
+            mstrfkClaimsUserCode = null;
+            mstrfkClientCode = null;
+            mstrfkDeveloperCode = null;
+            mstrfkActivityCode = null;
+            mintfkTaskID = -1;
+            mintCallLogID = -1;
+            mintDurationMinutes = 0;
+    
+        }
 
 //public bool Save(penuFormState As FormState){
 
@@ -450,80 +419,41 @@ public DataTable GetActivityList(string pstrClientCode, string pstrDeveloperCode
 
 //}
 
-//public Function GetActivitiesByDeveloperAndDate(ByVal pstrDeveloperCode As String, _
-//                                                ByVal pdtmStartDateTime As Date, _
-//                                                ByVal pdtmEndDateTime As Date) As ADODB.Recordset
-//    '<EhHeader>
-//    On Error GoTo PROC_ERROR
-//    Const c_strSource As String = "SupportCenter.clsActivity.GetActivitiesByDeveloperAndDate"
-//    '</EhHeader>
+        public DataTable GetActivitiesByDeveloperAndDate(string pstrDeveloperCode, DateTime pdtmStartDateTime, DateTime pdtmEndDateTime){
                                                 
-//    string strSQL;
-//    Dim rstActivities As ADODB.Recordset
-//    Set rstActivities = New ADODB.Recordset
+            string strSQL;
+            DataTable dtActivities;
     
-//    strSQL = "SELECT C.ClientName, "+
-//        "CU.ClaimsUserCode, "+
-//        "AL.StartDateTime, "+
-//        "AL.EndDateTime, "+
-//        "Al.voidject, "+
-//        "AL.Description "+
-//    "FROM ActivityLog AS AL "+
-//        "LEFT OUTER JOIN Client AS C ON C.ClientCode = AL.fkClientCode "+
-//        "LEFT OUTER JOIN ClaimsUser AS CU ON CU.ClaimsUserCode = AL.fkClaimsUserCode "+
-//            "AND CU.fkClientCode = AL.fkClientCode "+
-//    "WHERE AL.fkDeveloperCode = '" & pstrDeveloperCode & "' "+
-//        "AND AL.StartDateTime >= '" & pdtmStartDateTime & " 1:00 AM' "+
-//        "AND AL.EndDateTime <= '" & pdtmEndDateTime & " 11:59:59 PM'"
+            strSQL = "SELECT C.ClientName, " +
+                        "CU.ClaimsUserCode, " +
+                        "AL.StartDateTime, " +
+                        "AL.EndDateTime, " +
+                        "Al.voidject, " +
+                        "AL.Description " +
+                    "FROM ActivityLog AS AL " +
+                        "LEFT OUTER JOIN Client AS C ON C.ClientCode = AL.fkClientCode " +
+                        "LEFT OUTER JOIN ClaimsUser AS CU ON CU.ClaimsUserCode = AL.fkClaimsUserCode " +
+                            "AND CU.fkClientCode = AL.fkClientCode " +
+                    "WHERE AL.fkDeveloperCode = '" + pstrDeveloperCode + "' " +
+                        "AND AL.StartDateTime >= '" + pdtmStartDateTime + " 1:00 AM' " +
+                        "AND AL.EndDateTime <= '" + pdtmEndDateTime + " 11:59:59 PM'";
     
-//    Call rstActivities.Open(strSQL, gobjConnection.Connection)
+            dtActivities = Database.Query(strSQL);
         
-//    Set GetActivitiesByDeveloperAndDate = rstActivities
-
-//'<EhFooter>
-//PROC_EXIT:
-//    Set rstActivities = Nothing
-
-//    Exit Function
-//PROC_ERROR:
-//    Call ErrorHandler(c_strSource)
-//    GoTo PROC_EXIT
-//'</EhFooter>
-//}
+            return dtActivities;
+        }
 
 ////----------------------------------------------------------------------------------------------
 ////                                      private PROCEDURES
 ////----------------------------------------------------------------------------------------------
 
-//private Function GetInternalOrExternal(pstrActivityCode As String) As String
+        private string GetInternalOrExternal(string pstrActivityCode){
+            string strInternalOrExternal;
 
-//    On Error GoTo PROC_ERROR
+            //With mdtactivitycodes .Find "ActivityCode = '" & pstrActivityCode & "'", , , adBookmarkFirst
 
-//    Const c_strSource As String = "SupportCenter.clsActivity.GetInternalOrExternal"
-
-//    GetInternalOrExternal = vbNullString
-    
-//    With mrstActivityCodes
-//        .Find "ActivityCode = '" & pstrActivityCode & "'", , , adBookmarkFirst
-        
-//        If .EOF Then
-//            GoTo PROC_EXIT
-//        End If
-        
-//        GetInternalOrExternal = .Fields("InternalOrExternal").Value
-//        .MoveFirst
-//    End With
-
-//PROC_EXIT:
-
-//    Exit Function
-
-//PROC_ERROR:
-
-//    Call ErrorHandler(c_strSource)
-//    GoTo PROC_EXIT
-
-//}
+            return strInternalOrExternal;
+        }
 
     }
 }
