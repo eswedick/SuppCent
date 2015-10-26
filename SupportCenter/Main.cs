@@ -200,18 +200,29 @@ namespace SupportCenter
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            //init
+            // Choose Database
+            if (ConnectToDB())
+            {
+                //init
+                mobjClientIssues = new clsClientIssues();
+
+                //load preferences, security
 
 
-            //load preferences, security
+                //fill data
+                RefreshOpenItems();
 
+                // add initial panel based on preferences
+                //CreateNewClient();
+            }
+        }
 
-            //fill data
-            RefreshOpenItems();
-
-            // add initial panel based on preferences
-            //CreateNewClient();
-
+        private static bool ConnectToDB()
+        {
+            string strConnString = "Data Source=Jma-sql2012dev\\dev12;Initial Catalog=ClaimsSupport;Integrated Security=True;";
+            clsGlobal.ConnectionString = strConnString;
+            clsGlobal.Connection = new SqlConnection(strConnString);
+            return true;
         }
 
         //private void tsddNewMessage_Click(object sender, EventArgs e)
@@ -241,7 +252,7 @@ namespace SupportCenter
             // timesheet?
 
             // client issues
-            mdtOpenItems = mobjClientIssues.GetOpenItemsForDeveloper(mobjDeveloper.DeveloperCode);
+            mdtOpenItems = mobjClientIssues.GetOpenItemsForDeveloper("ES"); //mobjDeveloper.DeveloperCode
             grdOpenItems.DataSource = mdtOpenItems;
         }
 

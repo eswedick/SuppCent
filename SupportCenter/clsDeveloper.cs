@@ -20,17 +20,7 @@ namespace SupportCenter
 //                                          PROPERTIES
 //----------------------------------------------------------------------------------------------
 
-        public string DeveloperName
-        {
-            get
-            {
-                return mstrDeveloperName;
-            }
-            set
-            {
-                mstrDeveloperName = value;
-            }
-        }
+        public string DeveloperName { get; set; }
 
         public string DeveloperCode{
             get{
