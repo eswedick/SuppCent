@@ -39,16 +39,8 @@ namespace SupportCenter
         //-----------------------------------------------
         private void clientToolStripMenuItem1_Click(object sender, EventArgs e) // Show Client
         {
-            // create new Client control if necessary
-            if (this.pnlControlPanel.Controls.Contains(mctlClient) == false)         
-            {
-                CreateNewClient();
-            }
-
-            // Show Client cotrol
-            Control ctl = pnlControlPanel.Controls[pnlControlPanel.Controls.GetChildIndex(mctlClient)];
-            ctl.BringToFront();
-
+            // open client control with current client
+            OpenClient();
         }
 
         private void itemToolStripMenuItem1_Click(object sender, EventArgs e) // Item
@@ -95,10 +87,23 @@ namespace SupportCenter
             Control ctl = pnlControlPanel.Controls[pnlControlPanel.Controls.GetChildIndex(mctlDevDoc)];
             ctl.BringToFront();
         }
+
         #region Create Controls
-        private void CreateNewClient()
+        private void OpenClient(string pstrClientCode = "")
         {
-            mctlClient = new ctlClient();
+            // create new Client control if necessary
+            if (this.pnlControlPanel.Controls.Contains(mctlClient) == false)
+            {
+                CreateNewClient(pstrClientCode);
+            }
+
+            // Show Client cotrol
+            Control ctl = pnlControlPanel.Controls[pnlControlPanel.Controls.GetChildIndex(mctlClient)];
+            ctl.BringToFront();
+        }
+        private void CreateNewClient(string pstrClientCode = "")
+        {
+            mctlClient = new ctlClient(pstrClientCode);
             pnlControlPanel.Controls.Add(mctlClient);
             pnlControlPanel.Controls[pnlControlPanel.Controls.GetChildIndex(mctlClient)].Dock = DockStyle.Fill;
             pnlControlPanel.Refresh();
@@ -222,7 +227,15 @@ namespace SupportCenter
             string strConnString = "Data Source=Jma-sql2012dev\\dev12;Initial Catalog=ClaimsSupport;Integrated Security=True;";
             clsGlobal.ConnectionString = strConnString;
             clsGlobal.Connection = new SqlConnection(strConnString);
-            return true;
+
+            if (clsGlobal.Connection == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         //private void tsddNewMessage_Click(object sender, EventArgs e)
@@ -269,6 +282,22 @@ namespace SupportCenter
         private void showAllClientIssuesMenuItem_Click(object sender, EventArgs e)
         {
             // Show all client Issues for the current developer
+        }
+
+        private void grdOpenItems_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void grdOpenItems_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewRow selectedRow = grdOpenItems.Rows[e.RowIndex];
+            string strCurrentClientCode = selectedRow.Cells["ClientCode"].Value.ToString();
+
+            // set current client
+
+            // set client property of client control
+            OpenClient(strCurrentClientCode);
         }
 
     }

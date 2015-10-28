@@ -294,37 +294,16 @@ namespace SupportCenter
 //                                            EVENTS
 //----------------------------------------------------------------------------------------------
 
-//private voidClass_Initialize()
-    
-//    Set mdtClient = New ADODB.Recordset
-//    Set mdtUserList = New ADODB.Recordset
-//    Set mrstIssues = New ADODB.Recordset
+        public clsClient()
+        {
+            // make new, blank client
+            string strSQL;
 
-//End Sub
-
-//private voidClass_Terminate()
-
-//    On Error Resume Next
-
-//    Set mdtClient = Nothing
-//    Set mdtUserList = Nothing
-
-//End Sub
-
-
-        //----------------------------------------------------------------------------------------------
-        //                                       public PROCEDURES
-        //----------------------------------------------------------------------------------------------
-
-        public void NewClient(){
-    
-            string strSQL; 
-    
-            if (mdtClient == null){
+            if (mdtClient == null)
+            {
                 mdtClient = new DataTable();
             }
-            
-            //open db connection
+
             //mdtClient.Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockBatchOptimistic;
 
             mstrClientCode = null;
@@ -340,55 +319,84 @@ namespace SupportCenter
             mstrNotes = null;
             mstrfkPrimaryContactDeveloper = null;
             mstrfkTechnicalContact = null;
-    
+
             GetClientUsers(null);
             GetClientIssues(null);
-            
         }
 
+        public clsClient(string pstrClientCode = "")
+        {
+            // init client control for current client
+            if (pstrClientCode == "")
+            {
+                new clsClient();
+            }
+            else
+            {
+                EditClient(pstrClientCode);
+            }
+        }
+
+//private voidClass_Terminate()
+
+//    On Error Resume Next
+
+//    Set mdtClient = Nothing
+//    Set mdtUserList = Nothing
+
+//End Sub
+
+
+        //----------------------------------------------------------------------------------------------
+        //                                       public PROCEDURES
+        //----------------------------------------------------------------------------------------------
+
         public void EditClient(string pstrClientCode){
+
+            string strSQL;
+            DataRow drClientRow;
+
+            if (mdtClient != null)
+            {
+                mdtClient = null;
+            }
     
-            //Dim strSQL 
-    
-            //If mdtClient.State = adStateOpen Then mdtClient.Close
-            //mdtClient.CursorLocation = adUseClient
-    
-            //strSQL = _
-            //    "SELECT * " +
-            //    "  FROM Client " +
-            //    " WHERE ClientCode = '" & pstrClientCode & "'"
-    
-            //With mdtClient
-            //    .Open strSQL, gobjConnection.Connection, adOpenKeyset, adLockBatchOptimistic, adCmdText
+            strSQL = "SELECT * " +
+                "  FROM Client " +
+                " WHERE ClientCode = '" + pstrClientCode + "'";
+
+            //mdtClient.Rows.Add(Database.QueryAndReturnRow(strSQL));
+
+            drClientRow = Database.QueryAndReturnRow(strSQL);
         
-            //    If .EOF Then
-            //        mstrClientCode = null
-            //        mstrClientName = null
-            //        mstrPrimaryClaimsUserCode = null
-            //        mstrIntefaceClaimsUserCode = null
-            //        mstrRemoteAccessType = null
-            //        mstrRemoteAccessAddress = null
-            //        mstrSQLServerName = null
-            //        mstrSQLServerAddress = null
-            //        mstrTerminalServerName = null
-            //        mstrTerminalServerAddress = null
-            //        mstrNotes = null
-            //        mstrVersion = null
-            //        mstrfkPrimaryContactDeveloper = null
-            //        mstrfkTechnicalContact = null
-            //        mstrDomainLogin = null
-            //        mstrDomainPassword = null
-            //        mstrVPNAddress = null
-            //        mstrVPNLogin = null
-            //        mstrVPNPassword = null
-            //        mstrTerminalServerLogin = null
-            //        mstrTerminalServerPassword = null
-            //        mstrWebConnectionAddress = null
-            //        mstrWebConnectionLogin = null
-            //        mstrWebConnectionPassword = null
-            //        mstrSQLServerLogin = null
-            //        mstrSQLServerPassword = null
-            //    Else
+            if (drClientRow == null) {
+                mstrClientCode = null;
+                mstrClientName = null;
+                mstrPrimaryClaimsUserCode = null;
+                mstrIntefaceClaimsUserCode = null;
+                mstrRemoteAccessType = null;
+                mstrRemoteAccessAddress = null;
+                mstrSQLServerName = null;
+                mstrSQLServerAddress = null;
+                mstrTerminalServerName = null;
+                mstrTerminalServerAddress = null;
+                mstrNotes = null;
+                mstrVersion = null;
+                mstrfkPrimaryContactDeveloper = null;
+                mstrfkTechnicalContact = null;
+                mstrDomainLogin = null;
+                mstrDomainPassword = null;
+                mstrVPNAddress = null;
+                mstrVPNLogin = null;
+                mstrVPNPassword = null;
+                mstrTerminalServerLogin = null;
+                mstrTerminalServerPassword = null;
+                mstrWebConnectionAddress = null;
+                mstrWebConnectionLogin = null;
+                mstrWebConnectionPassword = null;
+                mstrSQLServerLogin = null;
+                mstrSQLServerPassword = null;
+            } else {
             //        mstrClientCode = .Fields("ClientCode").value
             //        mstrClientName = .Fields("ClientName").value
             //        mstrPrimaryClaimsUserCode = _
@@ -418,11 +426,10 @@ namespace SupportCenter
             //        mstrWebConnectionPassword = IfNull(.Fields("WebConnectionPassword").value, null)
             //        mstrSQLServerLogin = IfNull(.Fields("SQLServerLogin").value, null)
             //        mstrSQLServerPassword = IfNull(.Fields("SQLServerPassword").value, null)
-            //    End If
-            //End With
+            } 
     
-            //GetClientUsers pstrClientCode
-            //GetClientIssues pstrClientCode
+            GetClientUsers(pstrClientCode);
+            GetClientIssues(pstrClientCode);
 
             }
 
@@ -438,8 +445,8 @@ namespace SupportCenter
             if (mdtUserList != null) {
                 mdtUserList = null;
             }
-            
-            // fill mdtUserList
+
+            mdtUserList = Database.Query(strSQL);
 
         }
 
@@ -470,7 +477,7 @@ namespace SupportCenter
                 mdtIssues = null;
             }
 
-            // Fill issues datatable
+            mdtIssues = Database.Query(strSQL);
 
         }
 

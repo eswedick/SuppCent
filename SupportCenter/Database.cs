@@ -14,7 +14,7 @@ namespace SupportCenter
 
         //methods
         /// <summary>
-        /// Run query and return DataTable
+        /// Run query and return result DataTable
         /// </summary>
         /// <param name="pstrSQL">sql query to be run</param>
         /// <returns></returns>
@@ -22,9 +22,10 @@ namespace SupportCenter
         {
             DataTable dt = new DataTable();
 
-            using (SqlConnection conn = new SqlConnection(clsGlobal.ConnectionString))
+            //using (SqlConnection conn = new SqlConnection(clsGlobal.ConnectionString))
+            using (clsGlobal.Connection)
             {
-                using (SqlCommand cmd = new SqlCommand(pstrSQL, conn))
+                using (SqlCommand cmd = new SqlCommand(pstrSQL, clsGlobal.Connection))
                 {
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     da.Fill(dt);
@@ -40,9 +41,10 @@ namespace SupportCenter
         public static void Execute(string pstrSQL)
         {
             int rows;
-            using (SqlConnection conn = new SqlConnection(clsGlobal.ConnectionString))
+            //using (SqlConnection conn = new SqlConnection(clsGlobal.ConnectionString))
+            using (clsGlobal.Connection)
             {
-                using (SqlCommand cmd = new SqlCommand(pstrSQL, conn))
+                using (SqlCommand cmd = new SqlCommand(pstrSQL, clsGlobal.Connection))
                 {
                     rows = cmd.ExecuteNonQuery();
                 }
@@ -63,6 +65,15 @@ namespace SupportCenter
 
             strColValue = dr[pstrColName].ToString();
             return strColValue;
+        }
+
+
+        public static DataRow QueryAndReturnRow(string pstrSQL)
+        {
+            DataTable dt = Query(pstrSQL);
+            DataRow dr = dt.Rows[0];
+
+            return dr;
         }
     }
 }

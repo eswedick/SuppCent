@@ -87,35 +87,35 @@
             // clientViewMenuItem
             // 
             this.clientViewMenuItem.Name = "clientViewMenuItem";
-            this.clientViewMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clientViewMenuItem.Size = new System.Drawing.Size(129, 22);
             this.clientViewMenuItem.Text = "Client";
             this.clientViewMenuItem.Click += new System.EventHandler(this.clientToolStripMenuItem1_Click);
             // 
             // itemViewMenuItem
             // 
             this.itemViewMenuItem.Name = "itemViewMenuItem";
-            this.itemViewMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.itemViewMenuItem.Size = new System.Drawing.Size(129, 22);
             this.itemViewMenuItem.Text = "Item";
             this.itemViewMenuItem.Click += new System.EventHandler(this.itemToolStripMenuItem1_Click);
             // 
             // bugViewMenuItem
             // 
             this.bugViewMenuItem.Name = "bugViewMenuItem";
-            this.bugViewMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.bugViewMenuItem.Size = new System.Drawing.Size(129, 22);
             this.bugViewMenuItem.Text = "Bug";
             this.bugViewMenuItem.Click += new System.EventHandler(this.bugToolStripMenuItem1_Click);
             // 
             // timesheetViewMenuItem
             // 
             this.timesheetViewMenuItem.Name = "timesheetViewMenuItem";
-            this.timesheetViewMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.timesheetViewMenuItem.Size = new System.Drawing.Size(129, 22);
             this.timesheetViewMenuItem.Text = "Timesheet";
             this.timesheetViewMenuItem.Click += new System.EventHandler(this.timesheetToolStripMenuItem_Click);
             // 
             // devDocViewMenuItem
             // 
             this.devDocViewMenuItem.Name = "devDocViewMenuItem";
-            this.devDocViewMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.devDocViewMenuItem.Size = new System.Drawing.Size(129, 22);
             this.devDocViewMenuItem.Text = "Dev Doc";
             this.devDocViewMenuItem.Click += new System.EventHandler(this.devDocViewMenuItem_Click);
             // 
@@ -249,13 +249,18 @@
             // 
             // grdOpenItems
             // 
+            this.grdOpenItems.AllowUserToAddRows = false;
+            this.grdOpenItems.AllowUserToDeleteRows = false;
             this.grdOpenItems.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.grdOpenItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdOpenItems.Location = new System.Drawing.Point(6, 19);
+            this.grdOpenItems.MultiSelect = false;
             this.grdOpenItems.Name = "grdOpenItems";
             this.grdOpenItems.Size = new System.Drawing.Size(270, 552);
             this.grdOpenItems.TabIndex = 0;
+            this.grdOpenItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdOpenItems_CellContentClick);
+            this.grdOpenItems.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdOpenItems_CellContentDoubleClick);
             // 
             // pnlControlPanel
             // 
