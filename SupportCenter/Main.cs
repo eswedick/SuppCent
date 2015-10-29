@@ -46,14 +46,7 @@ namespace SupportCenter
         private void itemToolStripMenuItem1_Click(object sender, EventArgs e) // Item
         {
             // create new Item control if necessary
-            if (this.pnlControlPanel.Controls.Contains(mctlItem) == false)
-            {
-                CreateNewItem();
-            }
-
-            // Show Client cotrol
-            Control ctl = pnlControlPanel.Controls[pnlControlPanel.Controls.GetChildIndex(mctlItem)];
-            ctl.BringToFront();
+            OpenItem();
         }
 
         private void bugToolStripMenuItem1_Click(object sender, EventArgs e) // Bug
@@ -94,27 +87,44 @@ namespace SupportCenter
             // create new Client control if necessary
             if (this.pnlControlPanel.Controls.Contains(mctlClient) == false)
             {
-                CreateNewClient(pstrClientCode);
+                mctlClient = new ctlClient();
+                pnlControlPanel.Controls.Add(mctlClient);
+                pnlControlPanel.Controls[pnlControlPanel.Controls.GetChildIndex(mctlClient)].Dock = DockStyle.Fill;
+                pnlControlPanel.Refresh();
+            }
+            else
+            {
+                if (mctlClient.ClientCode != pstrClientCode){   // if the Client Code is different, switch clients
+                    mctlClient.SwitchClientTo(pstrClientCode);
+                }
             }
 
             // Show Client cotrol
             Control ctl = pnlControlPanel.Controls[pnlControlPanel.Controls.GetChildIndex(mctlClient)];
             ctl.BringToFront();
         }
-        private void CreateNewClient(string pstrClientCode = "")
-        {
-            mctlClient = new ctlClient(pstrClientCode);
-            pnlControlPanel.Controls.Add(mctlClient);
-            pnlControlPanel.Controls[pnlControlPanel.Controls.GetChildIndex(mctlClient)].Dock = DockStyle.Fill;
-            pnlControlPanel.Refresh();
-        }
 
-        private void CreateNewItem()
+        private void OpenItem()
         {
-            mctlItem = new ctlItem();
-            pnlControlPanel.Controls.Add(mctlItem);
-            pnlControlPanel.Controls[pnlControlPanel.Controls.GetChildIndex(mctlItem)].Dock = DockStyle.Fill;
-            pnlControlPanel.Refresh();
+            // create new Item control if necessary
+            if (this.pnlControlPanel.Controls.Contains(mctlItem) == false)
+            {
+                mctlItem = new ctlItem();
+                pnlControlPanel.Controls.Add(mctlItem);
+                pnlControlPanel.Controls[pnlControlPanel.Controls.GetChildIndex(mctlItem)].Dock = DockStyle.Fill;
+                pnlControlPanel.Refresh();
+            }
+            else
+            {
+                //if (mctlItem.ClientCode != pstrClientCode)
+                //{   // if the Item is different, switch Items
+                //    mctlItem.SwitchClientTo(pstrClientCode);
+                //}
+            }
+
+            // Show Item cotrol
+            Control ctl = pnlControlPanel.Controls[pnlControlPanel.Controls.GetChildIndex(mctlItem)];
+            ctl.BringToFront();
         }
 
         private void CreateNewTimesheet()
