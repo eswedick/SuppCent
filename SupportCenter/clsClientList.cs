@@ -331,14 +331,14 @@ namespace SupportCenter
                 mdtCurrentClientContactList = null;
 
                 // get Current Client Contact List
-
+                strSQL = "spGetClientContactList " + "'" + pstrCurrentClientCode + "'";
+                mdtCurrentClientContactList = Database.Query(strSQL);
 
                 // get property strings
                 drRow = drResults[0]; 
                 mstrCurrentClientName = drRow["ClientName"].ToString();
                 mstrCurrentClientCode = drRow["ClientCode"].ToString();
                 mstrCurrentClientPrimaryUser = drRow["PrimaryClaimsUserCode"].ToString() ?? null;
-
 
             } else {
                 mstrCurrentClientName = null;

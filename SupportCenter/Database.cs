@@ -75,5 +75,29 @@ namespace SupportCenter
 
             return dr;
         }
+
+        /// <summary>
+        /// Run stored procedure, adding parameters from dictionary
+        /// </summary>
+        /// <param name="pstrSQL"></param>
+        /// <param name="pdictParameters"></param>
+        /// <returns>resulting DataTable</returns>
+        public static DataTable Query(string pstrSQL, Dictionary<string, string> pdictParameters)
+        {
+            DataTable dt = new DataTable();
+
+            using (clsGlobal.Connection)
+            {
+                using (SqlCommand cmd = new SqlCommand(pstrSQL, clsGlobal.Connection))
+                {
+                    foreach(KeyValuePair<string, string> param in pdictParameters){
+                        cmd.Parameters.Add(param.Key, param.Value);
+                    }
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dt);
+                }
+            }
+            return dt;
+        }
     }
 }

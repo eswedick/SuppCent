@@ -21,6 +21,7 @@ namespace SupportCenter
 
         private clsDeveloper mobjDeveloper;
         private clsClientIssues mobjClientIssues;
+        private clsClientList mobjClientList;
 
         private DataTable mdtOpenItems;
 
@@ -220,6 +221,7 @@ namespace SupportCenter
             {
                 //init
                 mobjClientIssues = new clsClientIssues();
+                mobjClientList = new clsClientList();
 
                 //load preferences, security
 
@@ -248,26 +250,6 @@ namespace SupportCenter
             }
         }
 
-        //private void tsddNewMessage_Click(object sender, EventArgs e)
-        //{
-        //    //ToolStripButton tsbtn = new ToolStripButton();
-        //    //tsbtn.Text = "Dan";
-        //    //ToolStripButton tsbtn1 = new ToolStripButton();
-        //    //tsbtn1.Text = "Jonesy";
-        //    //ToolStripButton tsbtn2 = new ToolStripButton();
-        //    //tsbtn2.Text = "Steve";
-
-        //    //ToolStripDropDown dd = new ToolStripDropDown();
-        //    //dd.Items.AddRange(new ToolStripItem[] { tsbtn, tsbtn1, tsbtn2 });
-        //    //dd.Items[0].Select();
-
-        //    //tsddNewMessage.DropDown = dd;
-        //    //tsddNewMessage.DropDown.DefaultDropDownDirection = ToolStripDropDownDirection.AboveLeft;
-        //    //tsddNewMessage.ShowDropDown();
-
-
-        //}
-
         private void RefreshOpenItems()
         {
             grdOpenItems.Rows.Clear();
@@ -279,7 +261,7 @@ namespace SupportCenter
             grdOpenItems.DataSource = mdtOpenItems;
         }
 
-        private void showCurrentMenuItem_Click(object sender, EventArgs e)
+        private void showCurrentMenuItem_Click(object sender, EventArgs e) 
         {
             // Show Open Items for this dev cycle and High Importance Client Issues
         }
@@ -305,9 +287,15 @@ namespace SupportCenter
             string strCurrentClientCode = selectedRow.Cells["ClientCode"].Value.ToString();
 
             // set current client
+            mobjClientList.SetCurrentClient(strCurrentClientCode);
 
             // set client property of client control
             OpenClient(strCurrentClientCode);
+        }
+
+        private void lblCurrentClient_Click(object sender, EventArgs e)
+        {
+
         }
 
     }

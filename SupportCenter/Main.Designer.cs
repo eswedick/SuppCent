@@ -29,16 +29,16 @@
         private void InitializeComponent()
         {
             this.MenuBar = new System.Windows.Forms.MenuStrip();
+            this.maintenanceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemMaintenanceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bugMaintenanceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clientMaintenanceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mtsView = new System.Windows.Forms.ToolStripMenuItem();
             this.clientViewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.itemViewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bugViewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timesheetViewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.devDocViewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.maintenanceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.itemMaintenanceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bugMaintenanceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clientMaintenanceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.activitySummaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.billingSheetsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,6 +54,8 @@
             this.OpenItems = new System.Windows.Forms.GroupBox();
             this.grdOpenItems = new System.Windows.Forms.DataGridView();
             this.pnlControlPanel = new System.Windows.Forms.Panel();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.lblCurrentClient = new System.Windows.Forms.Label();
             this.MenuBar.SuspendLayout();
             this.OpenItems.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdOpenItems)).BeginInit();
@@ -62,8 +64,8 @@
             // MenuBar
             // 
             this.MenuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mtsView,
             this.maintenanceToolStripMenuItem,
+            this.mtsView,
             this.toolsToolStripMenuItem,
             this.preferenceToolStripMenuItem,
             this.helpToolStripMenuItem});
@@ -72,53 +74,6 @@
             this.MenuBar.Size = new System.Drawing.Size(994, 24);
             this.MenuBar.TabIndex = 0;
             // 
-            // mtsView
-            // 
-            this.mtsView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.clientViewMenuItem,
-            this.itemViewMenuItem,
-            this.bugViewMenuItem,
-            this.timesheetViewMenuItem,
-            this.devDocViewMenuItem});
-            this.mtsView.Name = "mtsView";
-            this.mtsView.Size = new System.Drawing.Size(44, 20);
-            this.mtsView.Text = "View";
-            // 
-            // clientViewMenuItem
-            // 
-            this.clientViewMenuItem.Name = "clientViewMenuItem";
-            this.clientViewMenuItem.Size = new System.Drawing.Size(129, 22);
-            this.clientViewMenuItem.Text = "Client";
-            this.clientViewMenuItem.Click += new System.EventHandler(this.clientToolStripMenuItem1_Click);
-            // 
-            // itemViewMenuItem
-            // 
-            this.itemViewMenuItem.Name = "itemViewMenuItem";
-            this.itemViewMenuItem.Size = new System.Drawing.Size(129, 22);
-            this.itemViewMenuItem.Text = "Item";
-            this.itemViewMenuItem.Click += new System.EventHandler(this.itemToolStripMenuItem1_Click);
-            // 
-            // bugViewMenuItem
-            // 
-            this.bugViewMenuItem.Name = "bugViewMenuItem";
-            this.bugViewMenuItem.Size = new System.Drawing.Size(129, 22);
-            this.bugViewMenuItem.Text = "Bug";
-            this.bugViewMenuItem.Click += new System.EventHandler(this.bugToolStripMenuItem1_Click);
-            // 
-            // timesheetViewMenuItem
-            // 
-            this.timesheetViewMenuItem.Name = "timesheetViewMenuItem";
-            this.timesheetViewMenuItem.Size = new System.Drawing.Size(129, 22);
-            this.timesheetViewMenuItem.Text = "Timesheet";
-            this.timesheetViewMenuItem.Click += new System.EventHandler(this.timesheetToolStripMenuItem_Click);
-            // 
-            // devDocViewMenuItem
-            // 
-            this.devDocViewMenuItem.Name = "devDocViewMenuItem";
-            this.devDocViewMenuItem.Size = new System.Drawing.Size(129, 22);
-            this.devDocViewMenuItem.Text = "Dev Doc";
-            this.devDocViewMenuItem.Click += new System.EventHandler(this.devDocViewMenuItem_Click);
-            // 
             // maintenanceToolStripMenuItem
             // 
             this.maintenanceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -126,8 +81,8 @@
             this.bugMaintenanceMenuItem,
             this.clientMaintenanceMenuItem});
             this.maintenanceToolStripMenuItem.Name = "maintenanceToolStripMenuItem";
-            this.maintenanceToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
-            this.maintenanceToolStripMenuItem.Text = "Maintenance";
+            this.maintenanceToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+            this.maintenanceToolStripMenuItem.Text = "New";
             // 
             // itemMaintenanceMenuItem
             // 
@@ -146,6 +101,53 @@
             this.clientMaintenanceMenuItem.Name = "clientMaintenanceMenuItem";
             this.clientMaintenanceMenuItem.Size = new System.Drawing.Size(105, 22);
             this.clientMaintenanceMenuItem.Text = "Client";
+            // 
+            // mtsView
+            // 
+            this.mtsView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clientViewMenuItem,
+            this.itemViewMenuItem,
+            this.bugViewMenuItem,
+            this.timesheetViewMenuItem,
+            this.devDocViewMenuItem});
+            this.mtsView.Name = "mtsView";
+            this.mtsView.Size = new System.Drawing.Size(44, 20);
+            this.mtsView.Text = "View";
+            // 
+            // clientViewMenuItem
+            // 
+            this.clientViewMenuItem.Name = "clientViewMenuItem";
+            this.clientViewMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.clientViewMenuItem.Text = "Clients";
+            this.clientViewMenuItem.Click += new System.EventHandler(this.clientToolStripMenuItem1_Click);
+            // 
+            // itemViewMenuItem
+            // 
+            this.itemViewMenuItem.Name = "itemViewMenuItem";
+            this.itemViewMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.itemViewMenuItem.Text = "Items";
+            this.itemViewMenuItem.Click += new System.EventHandler(this.itemToolStripMenuItem1_Click);
+            // 
+            // bugViewMenuItem
+            // 
+            this.bugViewMenuItem.Name = "bugViewMenuItem";
+            this.bugViewMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.bugViewMenuItem.Text = "Bugs";
+            this.bugViewMenuItem.Click += new System.EventHandler(this.bugToolStripMenuItem1_Click);
+            // 
+            // timesheetViewMenuItem
+            // 
+            this.timesheetViewMenuItem.Name = "timesheetViewMenuItem";
+            this.timesheetViewMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.timesheetViewMenuItem.Text = "Timesheet";
+            this.timesheetViewMenuItem.Click += new System.EventHandler(this.timesheetToolStripMenuItem_Click);
+            // 
+            // devDocViewMenuItem
+            // 
+            this.devDocViewMenuItem.Name = "devDocViewMenuItem";
+            this.devDocViewMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.devDocViewMenuItem.Text = "Dev Docs";
+            this.devDocViewMenuItem.Click += new System.EventHandler(this.devDocViewMenuItem_Click);
             // 
             // toolsToolStripMenuItem
             // 
@@ -242,7 +244,7 @@
             this.OpenItems.Controls.Add(this.grdOpenItems);
             this.OpenItems.Location = new System.Drawing.Point(0, 23);
             this.OpenItems.Name = "OpenItems";
-            this.OpenItems.Size = new System.Drawing.Size(283, 577);
+            this.OpenItems.Size = new System.Drawing.Size(283, 615);
             this.OpenItems.TabIndex = 2;
             this.OpenItems.TabStop = false;
             this.OpenItems.Text = "Open Items";
@@ -257,7 +259,7 @@
             this.grdOpenItems.Location = new System.Drawing.Point(6, 19);
             this.grdOpenItems.MultiSelect = false;
             this.grdOpenItems.Name = "grdOpenItems";
-            this.grdOpenItems.Size = new System.Drawing.Size(270, 552);
+            this.grdOpenItems.Size = new System.Drawing.Size(270, 590);
             this.grdOpenItems.TabIndex = 0;
             this.grdOpenItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdOpenItems_CellContentClick);
             this.grdOpenItems.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdOpenItems_CellContentDoubleClick);
@@ -269,14 +271,35 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlControlPanel.Location = new System.Drawing.Point(282, 27);
             this.pnlControlPanel.Name = "pnlControlPanel";
-            this.pnlControlPanel.Size = new System.Drawing.Size(712, 567);
+            this.pnlControlPanel.Size = new System.Drawing.Size(712, 605);
             this.pnlControlPanel.TabIndex = 3;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(683, 0);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(169, 21);
+            this.comboBox1.TabIndex = 4;
+            // 
+            // lblCurrentClient
+            // 
+            this.lblCurrentClient.AutoSize = true;
+            this.lblCurrentClient.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCurrentClient.Location = new System.Drawing.Point(583, 1);
+            this.lblCurrentClient.Name = "lblCurrentClient";
+            this.lblCurrentClient.Size = new System.Drawing.Size(94, 17);
+            this.lblCurrentClient.TabIndex = 5;
+            this.lblCurrentClient.Text = "Current Client";
+            this.lblCurrentClient.Click += new System.EventHandler(this.lblCurrentClient_Click);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(994, 628);
+            this.ClientSize = new System.Drawing.Size(994, 666);
+            this.Controls.Add(this.lblCurrentClient);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.pnlControlPanel);
             this.Controls.Add(this.OpenItems);
             this.Controls.Add(this.MenuBar);
@@ -321,6 +344,8 @@
         private System.Windows.Forms.ToolStripMenuItem showAllOpenMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showCurrentMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showAllClientIssuesMenuItem;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label lblCurrentClient;
     }
 }
 

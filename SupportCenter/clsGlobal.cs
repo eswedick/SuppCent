@@ -23,19 +23,6 @@ namespace SupportCenter
             }
         }
 
-        //// Connection Object
-        //static clsConnection gobjConnection;
-        //public static clsConnection ConnectionObject
-        //{
-        //    get
-        //    {
-        //        return gobjConnection;
-        //    }
-        //    set
-        //    {
-        //        gobjConnection = value;
-        //    }
-        //}
         public static SqlConnection Connection { get; set; }
 
         // Developer Code
