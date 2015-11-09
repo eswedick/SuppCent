@@ -23,9 +23,9 @@ namespace SupportCenter
             DataTable dt = new DataTable();
 
             //using (SqlConnection conn = new SqlConnection(clsGlobal.ConnectionString))
-            using (clsGlobal.Connection)
+            using (Global.Connection)
             {
-                using (SqlCommand cmd = new SqlCommand(pstrSQL, clsGlobal.Connection))
+                using (SqlCommand cmd = new SqlCommand(pstrSQL, Global.Connection))
                 {
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     da.Fill(dt);
@@ -42,9 +42,9 @@ namespace SupportCenter
         {
             int rows;
             //using (SqlConnection conn = new SqlConnection(clsGlobal.ConnectionString))
-            using (clsGlobal.Connection)
+            using (Global.Connection)
             {
-                using (SqlCommand cmd = new SqlCommand(pstrSQL, clsGlobal.Connection))
+                using (SqlCommand cmd = new SqlCommand(pstrSQL, Global.Connection))
                 {
                     rows = cmd.ExecuteNonQuery();
                 }
@@ -86,9 +86,9 @@ namespace SupportCenter
         {
             DataTable dt = new DataTable();
 
-            using (clsGlobal.Connection)
+            using (Global.Connection)
             {
-                using (SqlCommand cmd = new SqlCommand(pstrSQL, clsGlobal.Connection))
+                using (SqlCommand cmd = new SqlCommand(pstrSQL, Global.Connection))
                 {
                     foreach(KeyValuePair<string, string> param in pdictParameters){
                         cmd.Parameters.Add(param.Key, param.Value);

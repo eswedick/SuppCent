@@ -577,8 +577,8 @@ namespace SupportCenter
                 "                        CreatedDateTime, CreatedUser, ModifiedDateTime, " +
                 "                        ModifiedUser ) " +
                 "  values( '" + pstrUserCode + "', '" + pstrUserName + "', " +
-                "          '" + mstrClientCode + "', '" + DateTime.Now + "', '" + clsGlobal.DeveloperCode + "', " +
-                "          '" + DateTime.Now + "', '" + clsGlobal.DeveloperCode + "' ) ";
+                "          '" + mstrClientCode + "', '" + DateTime.Now + "', '" + Global.DeveloperCode + "', " +
+                "          '" + DateTime.Now + "', '" + Global.DeveloperCode + "' ) ";
 
             Database.Execute(strSQL);
 

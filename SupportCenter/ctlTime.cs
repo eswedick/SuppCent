@@ -98,7 +98,7 @@ namespace SupportCenter
             {
                 return false;
             }
-            else if (cboDeveloper.SelectedValue != clsGlobal.DeveloperCode)
+            else if (cboDeveloper.SelectedValue != Global.DeveloperCode)
             {
                 MessageBox.Show("You cannot enter time for someone else.");
                 return false;

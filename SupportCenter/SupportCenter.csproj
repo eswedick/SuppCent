@@ -50,7 +50,7 @@
     <Compile Include="clsClientList.cs" />
     <Compile Include="clsConnection.cs" />
     <Compile Include="clsDeveloper.cs" />
-    <Compile Include="clsGlobal.cs" />
+    <Compile Include="Global.cs" />
     <Compile Include="clsTask.cs" />
     <Compile Include="ctlConnectionInfo.cs">
       <SubType>UserControl</SubType>

@@ -237,10 +237,10 @@ namespace SupportCenter
         private static bool ConnectToDB()
         {
             string strConnString = "Data Source=Jma-sql2012dev\\dev12;Initial Catalog=ClaimsSupport;Integrated Security=True;";
-            clsGlobal.ConnectionString = strConnString;
-            clsGlobal.Connection = new SqlConnection(strConnString);
+            Global.ConnectionString = strConnString;
+            Global.Connection = new SqlConnection(strConnString);
 
-            if (clsGlobal.Connection == null)
+            if (Global.Connection == null)
             {
                 return false;
             }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SupportCenter
 {
-    public static class clsGlobal
+    public static class Global
     {
         // Connection String
         static string gstrConnectionString = "";
