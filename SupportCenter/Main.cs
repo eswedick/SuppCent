@@ -23,6 +23,8 @@ namespace SupportCenter
         private clsClientIssues mobjClientIssues;
         private clsClientList mobjClientList;
 
+        private ServerClient client;
+
         private DataTable mdtOpenItems;
 
         public frmMain()
@@ -296,6 +298,26 @@ namespace SupportCenter
         private void lblCurrentClient_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnConnectChat_Click(object sender, EventArgs e)
+        {
+
+            if (client == null)
+            {
+                client = new ServerClient();
+            }
+
+            client.Connect();
+
+            lblChatConnection.Text = "C";
+
+        }
+
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+            string answer = client.getPayloadAnswer("jones");
+            MessageBox.Show(answer);
         }
 
     }

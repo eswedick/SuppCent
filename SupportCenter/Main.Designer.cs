@@ -56,6 +56,9 @@
             this.pnlControlPanel = new System.Windows.Forms.Panel();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.lblCurrentClient = new System.Windows.Forms.Label();
+            this.btnConnectChat = new System.Windows.Forms.Button();
+            this.lblChatConnection = new System.Windows.Forms.Label();
+            this.btnSend = new System.Windows.Forms.Button();
             this.MenuBar.SuspendLayout();
             this.OpenItems.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdOpenItems)).BeginInit();
@@ -293,11 +296,42 @@
             this.lblCurrentClient.Text = "Current Client";
             this.lblCurrentClient.Click += new System.EventHandler(this.lblCurrentClient_Click);
             // 
+            // btnConnectChat
+            // 
+            this.btnConnectChat.Location = new System.Drawing.Point(878, 638);
+            this.btnConnectChat.Name = "btnConnectChat";
+            this.btnConnectChat.Size = new System.Drawing.Size(75, 23);
+            this.btnConnectChat.TabIndex = 6;
+            this.btnConnectChat.Text = "Connect";
+            this.btnConnectChat.UseVisualStyleBackColor = true;
+            this.btnConnectChat.Click += new System.EventHandler(this.btnConnectChat_Click);
+            // 
+            // lblChatConnection
+            // 
+            this.lblChatConnection.AutoSize = true;
+            this.lblChatConnection.Location = new System.Drawing.Point(959, 643);
+            this.lblChatConnection.Name = "lblChatConnection";
+            this.lblChatConnection.Size = new System.Drawing.Size(0, 13);
+            this.lblChatConnection.TabIndex = 7;
+            // 
+            // btnSend
+            // 
+            this.btnSend.Location = new System.Drawing.Point(797, 638);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(75, 23);
+            this.btnSend.TabIndex = 8;
+            this.btnSend.Text = "Send";
+            this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(994, 666);
+            this.Controls.Add(this.btnSend);
+            this.Controls.Add(this.lblChatConnection);
+            this.Controls.Add(this.btnConnectChat);
             this.Controls.Add(this.lblCurrentClient);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.pnlControlPanel);
@@ -346,6 +380,9 @@
         private System.Windows.Forms.ToolStripMenuItem showAllClientIssuesMenuItem;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label lblCurrentClient;
+        private System.Windows.Forms.Button btnConnectChat;
+        private System.Windows.Forms.Label lblChatConnection;
+        private System.Windows.Forms.Button btnSend;
     }
 }
 
