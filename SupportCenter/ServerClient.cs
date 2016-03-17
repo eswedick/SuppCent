@@ -16,6 +16,7 @@ namespace SupportCenter
         private TcpClient client;
         public string UserName { get; set; }
         public string Password { get; set; }
+        public bool IsConnected;
 
         public void Connect()
         {
@@ -28,6 +29,7 @@ namespace SupportCenter
         {
             string answer;
             List<byte> payloadData = new List<byte>();
+
             payloadData.AddRange(BitConverter.GetBytes((short)0));
             payloadData.AddRange(MakeString(payload));
             try
@@ -66,5 +68,6 @@ namespace SupportCenter
             client.GetStream().Read(data, 0, data.Length);
             return Encoding.ASCII.GetString(data);
         }
+        
     }
 }

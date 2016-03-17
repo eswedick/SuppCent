@@ -11,71 +11,95 @@ namespace ThreadedServer
 {
     class Server
     {
+        public IPAddress IP { get; set; }
         public int Port { get; set; }
-        public TcpListener listener;
-        private Thread listenerThread;
-        // Thread signal.
-        public static ManualResetEvent tcpClientConnected =
-            new ManualResetEvent(false);
+        private bool isListening;
+        public static Dictionary<string, TcpClient> clientsList;
+        TcpListener serverSocket;
+        TcpClient clientSocket;
 
-        public Server(int port)
+
+        public Server(IPAddress ip, int port)
         {
+            this.IP = ip;
             this.Port = port;
         }
 
         public void Start()
         {
-            listener = new TcpListener(new IPEndPoint(IPAddress.Any, Port));
-            listener.Start();
-            listenerThread = new Thread(new ThreadStart(Listener));
-            listenerThread.Start();
+            clientsList = new Dictionary<string, TcpClient>();
+            serverSocket = new TcpListener(IP, Port);
+            clientSocket = default(TcpClient);
+
+            int counter = 0;
+            isListening = true;
+
+            serverSocket.Start();
+            Console.WriteLine("Chat Server Started ....");
+
+            while (isListening)
+            {
+                counter += 1;
+                clientSocket = serverSocket.AcceptTcpClient();
+
+                byte[] bytesFrom = new byte[10025];
+                string dataFromClient = null;
+
+                NetworkStream networkStream = clientSocket.GetStream();
+                networkStream.Read(bytesFrom, 0, (int)clientSocket.ReceiveBufferSize);
+
+                dataFromClient = System.Text.Encoding.ASCII.GetString(bytesFrom);
+                dataFromClient = dataFromClient.Substring(0, dataFromClient.IndexOf("$"));
+                clientsList.Add(dataFromClient, clientSocket);
+
+                broadcast(dataFromClient + " Joined ", dataFromClient, false);
+
+                Console.WriteLine(dataFromClient + " Joined chat room ");
+
+                ClientHandler client = new ClientHandler();
+                client.startClient(clientSocket, dataFromClient, clientsList);
+
+            }
+
+            clientSocket.Close();
+            serverSocket.Stop();
+
+            Console.WriteLine("exit");
+            Console.ReadLine();
         }
 
         public void Stop()
         {
-            listener.Stop();
-            listenerThread.Abort();
-        }
+            //stop listening
+            isListening = false;
 
-        public void Listener()
-        {
-            while (true)
-            {
-                try
-                {
-                    tcpClientConnected.Reset();
-                    listener.BeginAcceptTcpClient(new AsyncCallback(DoAcceptTcpClientCallback), listener);
-                    tcpClientConnected.WaitOne();
-                }
-                catch
-                (Exception e)
-                {
-                    Console.WriteLine("Error in listener thread:");
-                    Console.WriteLine(e.Message);
-                }
-                
-
+            //loop through client list closing
+            foreach (TcpClient client in clientsList.Values){
+                client.Close();
             }
         }
 
-        // Process the client connection.
-        public static void DoAcceptTcpClientCallback(IAsyncResult ar)
+        public static  void broadcast(string msg, string uName, bool includeName)
         {
-            // Get the listener that handles the client request.
-            TcpListener listener = (TcpListener)ar.AsyncState;
+            foreach (string Item in clientsList.Keys)
+            {
+                TcpClient broadcastSocket;
+                clientsList.TryGetValue(uName, out broadcastSocket);
 
-            // End the operation
-            TcpClient c = listener.EndAcceptTcpClient(ar);
+                NetworkStream broadcastStream = broadcastSocket.GetStream();
+                Byte[] broadcastBytes = null;
 
-            // Handle returned data
-            HandleClient(c);
-            
-            // Process the connection here.
-            Console.WriteLine("Client connected completed");
-
-            // Signal the calling thread to continue.
-            tcpClientConnected.Set();
-
+                if (includeName == true)
+                {
+                    broadcastBytes = Encoding.ASCII.GetBytes(uName + " says : " + msg);
+                }
+                else
+                {
+                    broadcastBytes = Encoding.ASCII.GetBytes(msg);
+                }
+                broadcastStream.Write(broadcastBytes, 0, broadcastBytes.Length);
+                broadcastStream.Flush();
+            }
         }
 
         public static void HandleClient(TcpClient c)
