@@ -44,12 +44,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="chatBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="chatBar.Designer.cs">
+      <DependentUpon>chatBar.cs</DependentUpon>
+    </Compile>
     <Compile Include="clsActivity.cs" />
     <Compile Include="clsClient.cs" />
     <Compile Include="clsClientIssues.cs" />
     <Compile Include="clsClientList.cs" />
     <Compile Include="clsConnection.cs" />
     <Compile Include="clsDeveloper.cs" />
+    <Compile Include="frmChatLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmChatLog.Designer.cs">
+      <DependentUpon>frmChatLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Global.cs" />
     <Compile Include="clsTask.cs" />
     <Compile Include="ctlConnectionInfo.cs">
@@ -98,6 +110,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerClient.cs" />
+    <EmbeddedResource Include="chatBar.resx">
+      <DependentUpon>chatBar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ctlClient.resx">
       <DependentUpon>ctlClient.cs</DependentUpon>
     </EmbeddedResource>
@@ -112,6 +127,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ctlItem.resx">
       <DependentUpon>ctlItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmChatLog.resx">
+      <DependentUpon>frmChatLog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmChooseDatabase.resx">
       <DependentUpon>frmChooseDatabase.cs</DependentUpon>

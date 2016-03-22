@@ -86,7 +86,8 @@ namespace ThreadedServer
                 TcpClient broadcastSocket;
                 clientsList.TryGetValue(uName, out broadcastSocket);
 
-                NetworkStream broadcastStream = broadcastSocket.GetStream();
+                NetworkStream broadcastStream = broadcastSocket.GetStream();
+
                 Byte[] broadcastBytes = null;
 
                 if (includeName == true)
@@ -96,7 +97,8 @@ namespace ThreadedServer
                 else
                 {
                     broadcastBytes = Encoding.ASCII.GetBytes(msg);
-                }
+                }
+
                 broadcastStream.Write(broadcastBytes, 0, broadcastBytes.Length);
                 broadcastStream.Flush();
             }

@@ -15,10 +15,10 @@ namespace ThreadedServer
         string clNo;
         Dictionary<string, TcpClient> clientsList;
 
-        public void startClient(TcpClient inClientSocket, string clineNo, Dictionary<string, TcpClient> cList)
+        public void startClient(TcpClient inClientSocket, string clientNum, Dictionary<string, TcpClient> cList)
         {
             this.clientSocket = inClientSocket;
-            this.clNo = clineNo;
+            this.clNo = clientNum;
             this.clientsList = cList;
 
             Thread ctThread = new Thread(doChat);
